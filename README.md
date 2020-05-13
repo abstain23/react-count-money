@@ -23,4 +23,5 @@ yarn add styled-components
 由于是typescrip，需要安装声明文件
 yarn add --dev @types/styled-components
 
+如果安装了sass，可以在里面使用sass
 ```
