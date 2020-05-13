@@ -14,3 +14,13 @@
   "include": ["src"]
 }
 ```
+
+#### css in js
+
+```
+yarn add styled-components
+
+由于是typescrip，需要安装声明文件
+yarn add --dev @types/styled-components
+
+```

@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import styled from 'styled-components'
+
+const Button = styled.button({
+  color:'grey',
+  background:'white'
+})
+const Button2 = styled.button`
+  color: red;
+  background:green;
+  &:hover {
+    background:red;
+  }
+  border: 10px solid red;
+`
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Button>你好</Button>
+      <Button2>你好2</Button2>
     </div>
   );
 }
