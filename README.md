@@ -34,6 +34,8 @@ yarn add --dev @types/styled-components
 #### react-eject 暴漏配置文件
 
 
+#### [跨平台中文字体解决方案](https://github.com/zenozeng/fonts.css/)
+
 #### 使用import svg遇到的问题(svg-sprite-loader svgo-loader)
 
 ```js

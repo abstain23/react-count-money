@@ -11,11 +11,13 @@ line-height:24px;
   display:flex;
   > li {
     flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
     padding:4px;
+    .link {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column;
+    }
     .icon {
         width:24px;
         height:24px;
@@ -24,24 +26,27 @@ line-height:24px;
 }
 `
 
-const Nav:any = (props:object) => {
+const Nav = () => {
     return (
         <NavWrapper>
           <ul>
             <li>
-                {/* <svg fill='black' className='icon'>
-                    <use xlinkHref='#tag' />
-                </svg> */}
-                <Icon name='tag'/>
-                <Link to="/tags">标签页</Link>
+                <Link to="/tags" className='link'>
+                    <Icon name='tag'/>
+                    标签页
+                </Link>
             </li>
             <li>
-                <Icon name='money'/>
-                <Link to="/money">记账页</Link>
+                <Link to="/money" className='link'>
+                    <Icon name='money'/>
+                    记账页
+                </Link>
             </li>
             <li>
-              <Icon name='count'/>
-              <Link to="/statistics">统计页</Link>
+              <Link to="/statistics" className='link'>
+                <Icon name='count'/>
+                  统计页
+              </Link>
             </li>
           </ul>
         </NavWrapper>
