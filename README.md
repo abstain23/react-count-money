@@ -34,4 +34,18 @@ yarn add --dev @types/styled-components
 #### react-eject 暴漏配置文件
 
 
-#### 
+#### 使用import svg遇到的问题
+
+```js
+import icon_money from 'icons/money.svg'
+import icon_tag from 'icons/tag.svg'
+import icon_count from 'icons/count.svg'
+
+console.log(icon_money,icon_tag,icon_count)
+
+如果不使用一下引入的变量， svg会无效果
+所以使用require
+require('icons/money.svg') 
+require('icons/tag.svg') 
+require('icons/count.svg') 
+```

@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import icon_money from 'icons/money.svg'
-import icon_tag from 'icons/tag.svg'
-import icon_count from 'icons/count.svg'
+require('icons/money.svg') 
+require('icons/tag.svg') 
+require('icons/count.svg') 
 
+// console.log(icon_money,icon_tag,icon_count)
 const NavWrapper = styled.nav`
 box-shadow:0 0 3px rgba(0,0,0,.25);
 line-height:24px;
@@ -12,11 +13,14 @@ line-height:24px;
   display:flex;
   > li {
     flex:1;
-    text-align:center;
-    padding:16px;
-    > img {
-        width:16px;
-        height:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    padding:4px;
+    .icon {
+        width:24px;
+        height:24px;
     }
   }
 }
@@ -28,13 +32,21 @@ const Nav:any = (props:object) => {
         <NavWrapper>
           <ul>
             <li>
-              <img src={icon_tag}/>
-              <Link to="/tags">标签页</Link>
+                <svg fill='black' className='icon'>
+                    <use xlinkHref='#tag' />
+                </svg>
+                <Link to="/tags">标签页</Link>
             </li>
             <li>
-              <Link to="/money">记账页</Link>
+                <svg fill='black' className='icon'>
+                    <use xlinkHref='#money' />
+                </svg>
+                <Link to="/money">记账页</Link>
             </li>
             <li>
+                <svg fill='black' className='icon'>
+                    <use xlinkHref='#count' />
+                </svg>
               <Link to="/statistics">统计页</Link>
             </li>
           </ul>
