@@ -1,30 +1,18 @@
 import React from 'react';
-import styled from 'styled-components'
+
 import {
   HashRouter as Router,
   Switch,
   Route,
   Redirect
 } from "react-router-dom";
-import Nav from 'components/Nav'
+import Layout from 'components/Layout'
 
-const Wrapper = styled.div`
-height:100vh;
-display: flex;
-flex-direction:column;
-`
-
-const Main = styled.div`
-flex-grow:1;
-overflow:auto;
-`
 
 
 export default function App() {
   return (
     <Router>
-      <Wrapper>
-        <Main>
         <Switch>
           <Route path="/tags">
             <Tags />
@@ -40,24 +28,32 @@ export default function App() {
             <NoMatch />
           </Route>
         </Switch>
-        </Main>
-        <Nav>
-        </Nav>
-      </Wrapper>
     </Router>
   );
 }
 
 function Statistics() {
-  return <h2>统计页面</h2>;
+  return (
+    <Layout>
+      <h2>统计页面</h2>
+    </Layout>
+  );
 }
 
 function Tags() {
-  return <h2>标签页面</h2>;
+  return (
+    <Layout>
+      <h2>标签页面</h2>
+    </Layout>
+  );
 }
 
 function Money() {
-  return <h2>记账页面</h2>;
+  return (
+    <Layout>
+      <h2>记账页面</h2>
+    </Layout>
+  );
 }
 
 function NoMatch() {
