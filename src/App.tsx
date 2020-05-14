@@ -8,26 +8,34 @@ import {
   Redirect
 } from "react-router-dom";
 
+const Wrapper = styled.div`
+height:100vh;
+display: flex;
+flex-direction:column;
+`
+
+const Main = styled.div`
+flex-grow:1;
+overflow:auto;
+`
+
+const Nav = styled.nav`
+border:1px solid red;
+> ul {
+  display:flex;
+  > li {
+    flex:1;
+    text-align:center;
+    padding:16px;
+  }
+}
+`
+
 export default function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/tags">标签页</Link>
-            </li>
-            <li>
-              <Link to="/money">记账页</Link>
-            </li>
-            <li>
-              <Link to="/statistics">统计页</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+      <Wrapper>
+        <Main>
         <Switch>
           <Route path="/tags">
             <Tags />
@@ -43,7 +51,21 @@ export default function App() {
             <NoMatch />
           </Route>
         </Switch>
-      </div>
+        </Main>
+        <Nav>
+          <ul>
+            <li>
+              <Link to="/tags">标签页</Link>
+            </li>
+            <li>
+              <Link to="/money">记账页</Link>
+            </li>
+            <li>
+              <Link to="/statistics">统计页</Link>
+            </li>
+          </ul>
+        </Nav>
+      </Wrapper>
     </Router>
   );
 }

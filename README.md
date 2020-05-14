@@ -1,5 +1,9 @@
 #### react + typescript
 
+#### create-react-app
+
+`@import-normalize; 普通化浏览器样式，让所有浏览器看起来都差不多`
+
 #### 使用dart-sass 代替node-sass
 
 `yarn add node-sass@npm:dart-sass`
