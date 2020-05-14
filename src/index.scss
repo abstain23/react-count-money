@@ -1,5 +1,5 @@
 @import-normalize;
-
+@import 'helper.scss';
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -11,4 +11,9 @@ ul,li {
 a {
     text-decoration: none;
     color: inherit;
+}
+body {
+    font-family: $font-hei;
+    font-size: 16px;
+    line-height: 1.2;
 }
