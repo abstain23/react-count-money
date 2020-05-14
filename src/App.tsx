@@ -1,13 +1,14 @@
 import React from 'react';
-
 import {
   HashRouter as Router,
   Switch,
   Route,
   Redirect
 } from "react-router-dom";
-import Layout from 'components/Layout'
-
+import Tags from 'pages/Tags'
+import Money from 'pages/Money'
+import Statistics from 'pages/Statistics'
+import NoMatch from 'pages/NoMatch'
 
 
 export default function App() {
@@ -32,36 +33,4 @@ export default function App() {
   );
 }
 
-function Statistics() {
-  return (
-    <Layout>
-      <h2>统计页面</h2>
-    </Layout>
-  );
-}
 
-function Tags() {
-  return (
-    <Layout>
-      <h2>标签页面</h2>
-    </Layout>
-  );
-}
-
-function Money() {
-  return (
-    <Layout>
-      <h2>记账页面</h2>
-    </Layout>
-  );
-}
-
-function NoMatch() {
-  return (
-    <div>
-      <h3>
-        页面不存在
-      </h3>
-    </div>
-  );
-}
