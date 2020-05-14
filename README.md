@@ -34,7 +34,7 @@ yarn add --dev @types/styled-components
 #### react-eject 暴漏配置文件
 
 
-#### 使用import svg遇到的问题
+#### 使用import svg遇到的问题(svg-sprite-loader svgo-loader)
 
 ```js
 import icon_money from 'icons/money.svg'
