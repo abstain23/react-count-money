@@ -9,6 +9,7 @@ box-shadow:0 0 3px rgba(0,0,0,.25);
 line-height:24px;
 > ul {
   display:flex;
+  margin-bottom:0;
   > li {
     flex:1;
     padding:4px;
@@ -22,9 +23,9 @@ line-height:24px;
         height:24px;
         }
     &.active {
-      color: red;
+      color: #40a9ff;
       svg {
-        fill:red;
+        fill:#40a9ff;
         }
       }
     }

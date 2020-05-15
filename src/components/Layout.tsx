@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactNode } from 'react'
 import Nav from 'components/Nav'
 import styled from 'styled-components'
 
@@ -14,7 +14,7 @@ overflow:auto;
 `
 
 type Props = {
-    children:ReactElement
+    children:ReactNode | JSX.Element[] | JSX.Element
 }
 
 function Layout(props:Props) {
