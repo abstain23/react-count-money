@@ -2,12 +2,18 @@ import React, {useState} from 'react'
 import Layout from 'components/Layout'
 import {Tag, Button} from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
-
+import styled from 'styled-components'
 //UI部分
 import TagsSection from './MoneyUi/TagsSection'
 import NotesSection from './MoneyUi/NotesSection'
 import CateGorySection from './MoneyUi/CateGorySection'
 import NumberPadSection from './MoneyUi/NumberPadSection'
+
+const MyLayout = styled(Layout)`
+/* display:flex;
+border:1px solid red;
+flex-direction: column; */
+`
 
 const {CheckableTag} = Tag
 
@@ -23,12 +29,8 @@ function Money() {
         const newSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag)
         setSelectedTags(newSelectedTags)
     }
-    const cateHandleChange = (key:string) => {
-        console.log(key)
-        console.log(typeof key)
-    }
     return (
-        <Layout>
+        <MyLayout>
             <TagsSection>
                 <ol>
                 {tagsData.map(tag => (
@@ -74,7 +76,7 @@ function Money() {
                     <button>.</button>
                 </div>
             </NumberPadSection>
-        </Layout>
+        </MyLayout>
     )
 }
 

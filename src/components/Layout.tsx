@@ -11,6 +11,8 @@ flex-direction:column;
 const Main = styled.div`
 flex-grow:1;
 overflow:auto;
+display:flex;
+flex-direction:column;
 `
 
 type Props = {

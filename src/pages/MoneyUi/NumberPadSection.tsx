@@ -54,6 +54,9 @@ flex-direction:column;
       &:nth-child(14) {
         background:#A9A9A9;
       }
+      &:active {
+          background:#ccc;
+        }
   }
 }
 `

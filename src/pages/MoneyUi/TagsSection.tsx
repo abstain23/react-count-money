@@ -2,6 +2,11 @@ import styled from 'styled-components'
 const TagsSection = styled.section`
 background:#fff;
 padding:12px 4px;
+flex-grow:1;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+align-items:left;
 ol {
     font-size:14px;
     .ant-tag-checkable {
@@ -15,6 +20,7 @@ ol {
         margin-left:12px;
         font-family:inherit;
         font-size:12px;
+        width:100px;
     }
 `
 export default TagsSection
