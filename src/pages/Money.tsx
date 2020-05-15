@@ -1,80 +1,15 @@
 import React, {useState} from 'react'
 import Layout from 'components/Layout'
-import styled from 'styled-components'
 import {Tag, Button} from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
 
+//UI部分
+import TagsSection from './MoneyUi/TagsSection'
+import NotesSection from './MoneyUi/NotesSection'
+import CateGorySection from './MoneyUi/CateGorySection'
+import NumberPadSection from './MoneyUi/NumberPadSection'
+
 const {CheckableTag} = Tag
-
-
-const TagsSection = styled.section`
-background:#fff;
-padding:12px 4px;
-ol {
-    font-size:14px;
-    .ant-tag-checkable {
-        border: 1px solid #d9d9d9;
-        border-radius:18px;
-        padding:3px 18px;
-        margin:8px 12px;
-    }
-}
-> .ant-btn {
-        margin-left:12px;
-        font-family:inherit;
-        font-size:12px;
-    }
-`
-const NotesSection = styled.section`
-background:#f5f5f5;
-font-size:12px;
-padding:0 16px;
-> label {
-    display:flex;
-    align-items: center;
-    span {
-        margin-right:16px;
-        white-space:nowrap;
-    }
-    input {
-        width:100%;
-        height:72px;
-        background:none;
-        border:none;
-        &:focus {
-            outline:none;
-        }
-    }
-}
-`
-const CateGorySection = styled.section`
-font-size:24px;
-ul {
-    display:flex;
-    margin:0;
-    background:#c4c4c4;
-    li {
-        flex:1;
-        text-align:center;
-        padding: 18px 0;
-        &.selected {
-            position:relative;
-            &::after {
-                content:'';
-                position:absolute;
-                display:block;
-                background:#333;
-                bottom:0;
-                left:0;
-                height:3px;
-                width:100%;
-            }
-        }
-    }
-}
-`
-const NumberPadSection = styled.section`
-`
 
 function Money() {
     const tagsData:Array<string> = ['衣','食','住','行']
@@ -121,8 +56,8 @@ function Money() {
                 </ul>
             </CateGorySection>
             <NumberPadSection>
-                <div>100</div>
-                <div>
+                <div className='output'>100</div>
+                <div className='pad clearfix'>
                     <button>1</button>
                     <button>2</button>
                     <button>3</button>
@@ -134,8 +69,8 @@ function Money() {
                     <button>7</button>
                     <button>8</button>
                     <button>9</button>
-                    <button>OK</button>
-                    <button>0</button>
+                    <button className='ok'>OK</button>
+                    <button className='zero'>0</button>
                     <button>.</button>
                 </div>
             </NumberPadSection>
