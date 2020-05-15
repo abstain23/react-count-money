@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
 import Layout from 'components/Layout'
 import styled from 'styled-components'
-import {Tag, Button, InputNumber} from 'antd'
+import {Tag, Button} from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
 
 const {CheckableTag} = Tag
 
+
 const TagsSection = styled.section`
 background:#fff;
 padding:12px 4px;
-border:1px solid red;
 ol {
     font-size:14px;
     .ant-tag-checkable {
@@ -26,19 +26,71 @@ ol {
     }
 `
 const NotesSection = styled.section`
+background:#f5f5f5;
+font-size:12px;
+padding:0 16px;
+> label {
+    display:flex;
+    align-items: center;
+    span {
+        margin-right:16px;
+        white-space:nowrap;
+    }
+    input {
+        width:100%;
+        height:72px;
+        background:none;
+        border:none;
+        &:focus {
+            outline:none;
+        }
+    }
+}
 `
 const CateGorySection = styled.section`
+font-size:24px;
+ul {
+    display:flex;
+    margin:0;
+    background:#c4c4c4;
+    li {
+        flex:1;
+        text-align:center;
+        padding: 18px 0;
+        &.selected {
+            position:relative;
+            &::after {
+                content:'';
+                position:absolute;
+                display:block;
+                background:#333;
+                bottom:0;
+                left:0;
+                height:3px;
+                width:100%;
+            }
+        }
+    }
+}
 `
 const NumberPadSection = styled.section`
 `
 
 function Money() {
-    const tagsData = ['衣','食','住','行']
+    const tagsData:Array<string> = ['衣','食','住','行']
     const [selectedTags,setSelectedTags] = useState(['衣'])
-    const handleChange = (tag:string, checked:boolean) => {
+    // const c = <const> tagsData
+    // const tagsDataType = ['衣','食','住','行'] as const
+    // type tagProp = typeof tagsDataType[number] 
+    type tagProp = typeof tagsData[number]
+    const tagsHandleChange = (tag:tagProp, checked:boolean) => {
         // console.log(tag, checked)
-        const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag)
-        setSelectedTags(nextSelectedTags)
+        const newSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag)
+        setSelectedTags(newSelectedTags)
+    }
+    const cateHandleChange = (key:string) => {
+        console.log(key)
+        console.log(typeof key)
     }
     return (
         <Layout>
@@ -48,7 +100,7 @@ function Money() {
                     <CheckableTag
                         key={tag}
                         checked={selectedTags.indexOf(tag) > -1}
-                        onChange={checked => handleChange(tag, checked)}
+                        onChange={checked => tagsHandleChange(tag, checked)}
                         >
                         {tag}
                         </CheckableTag>
@@ -59,13 +111,13 @@ function Money() {
             <NotesSection>
                 <label>
                     <span>备注</span>
-                    <InputNumber />
+                    <input placeholder='这里添加备注'/>
                 </label>
             </NotesSection>
             <CateGorySection>
                 <ul>
+                    <li className='selected'>收入</li>
                     <li>支出</li>
-                    <li>收入</li>
                 </ul>
             </CateGorySection>
             <NumberPadSection>
