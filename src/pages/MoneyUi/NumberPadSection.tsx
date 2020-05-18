@@ -29,6 +29,7 @@ flex-direction:column;
     &.zero {
       width:50%
     }
+    &.point {font-size:34px}
     &:nth-child(2),
     &:nth-child(5) {
         background:#E0E0E0;

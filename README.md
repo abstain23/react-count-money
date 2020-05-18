@@ -51,3 +51,32 @@ require('icons/money.svg')
 require('icons/tag.svg') 
 require('icons/count.svg') 
 ```
+
+
+#### useEffect
+
+```js
+useState 异步更新问题
+ const showInput = () => {
+        setInputVisible(() => {
+            return true
+        })
+        // console.log(inputVisible)
+        此时的inputEl.current还是空的
+        // setTimeout(() => {
+        //  inputEl.current!.focus()   
+        // });
+    }
+
+使用useEffect解决，监听inputVisible的变化
+useEffect(() => {
+        // console.log('cc')
+        // console.log(inputEl.current)
+        if(inputVisible) {
+            inputEl.current && inputEl.current.focus()
+        }
+    }, [inputVisible])
+
+
+```
+
