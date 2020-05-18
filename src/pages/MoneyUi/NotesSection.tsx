@@ -39,7 +39,7 @@ const NotesSection: FC = () => {
                 <input placeholder='这里添加备注' 
                        defaultValue={note}
                        // onChange={(e) => setNote(e.target.value)}
-                        ref={inputEl}
+                       ref={inputEl}
                         onBlur={handleBlur}
                        />
             </label>

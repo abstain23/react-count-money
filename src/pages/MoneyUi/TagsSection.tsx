@@ -42,7 +42,7 @@ const TagsSection: FC = () => {
     const [selectedTags, setSelectedTags] = useState<string []>([''])
     const [inputVisible,setInputVisible] = useState<boolean>(false)
     const [inputValue,setInputValue] = useState<string>('')
-    let inputEl:RefObject<Input> = useRef(null)
+    let inputEl:RefObject<Input>= useRef(null)
     useEffect(() => {
         // console.log('cc')
         // console.log(inputEl.current)
