@@ -80,3 +80,7 @@ useEffect(() => {
 
 ```
 
+#### 受控组件与非受控组件
+
+受控组件时时监听 `value onChange`
+非受控组件 `defaultValue onBlur`

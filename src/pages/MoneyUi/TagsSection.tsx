@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,RefObject } from 'react'
+import React, { useState, useRef, useEffect, RefObject, FC } from 'react'
 import styled from 'styled-components'
 import { PlusOutlined } from '@ant-design/icons'
 import { Tag, Input } from 'antd'
@@ -37,7 +37,7 @@ ol {
     }
 `
 
-const TagsSection: React.FC = () => {
+const TagsSection: FC = () => {
     const [tagsData, setTagsData] = useState<Array<string>>(['衣', '食', '住', '行'])
     const [selectedTags, setSelectedTags] = useState<string []>([''])
     const [inputVisible,setInputVisible] = useState<boolean>(false)

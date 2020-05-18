@@ -20,12 +20,7 @@ function Money() {
     return (
         <MyLayout>
             <TagsSection />
-            <NotesSection>
-                <label>
-                    <span>备注</span>
-                    <input placeholder='这里添加备注'/>
-                </label>
-            </NotesSection>
+            <NotesSection />
             <CateGorySection>
                 <ul>
                     <li className='selected'>收入</li>
