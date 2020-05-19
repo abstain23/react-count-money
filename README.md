@@ -99,3 +99,11 @@ const [selected, setSelected] = useState({
 
   obj可以是对象里面的任意一项
 ```
+
+#### react-router
+
+```js
+
+exact 精准匹配
+
+```

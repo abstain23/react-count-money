@@ -17,7 +17,7 @@ type categoryType = 0 | 1
 
 const Money:React.FC = () => {
     const [selected, setSelected] = useState({
-        tags: [] as string[],
+        tagsId: [] as number[],
         note:'',
         category: 0 as categoryType,
         amount: '0'
@@ -41,8 +41,8 @@ const Money:React.FC = () => {
                 <hr/>
                 {selected.amount} */}
             </div>
-            <TagsSection value={selected.tags}
-                         onChange={tags => handleChange({tags})}
+            <TagsSection value={selected.tagsId}
+                         onChange={tagsId => handleChange({tagsId})}
                          />
             <NotesSection value={selected.note}
                           onChange={note => handleChange({note})}

@@ -38,15 +38,15 @@ ol {
     }
 `
 type Props = {
-    value: string[];
-    onChange:(tags:string[]) => void
+    value: number[];
+    onChange:(tags:number[]) => void
 }
 
 const TagsSection: FC<Props> = (props) => {
     // const [tagsData, setTagsData] = useState<Array<string>>(['衣', '食', '住', '行'])
     // const [selectedTags, setSelectedTags] = useState<string []>([''])
     const {tagsData, setTagsData} = useTags()
-    const {value:selectedTags, onChange} = props
+    const {value:selectedTagsId, onChange} = props
     const [inputVisible,setInputVisible] = useState<boolean>(false)
     const [inputValue,setInputValue] = useState<string>('')
     let inputEl:RefObject<Input>= useRef(null)
@@ -65,15 +65,16 @@ const TagsSection: FC<Props> = (props) => {
     type tagProp = typeof tagsData[number]
     const tagsHandleChange = (tag: tagProp, checked: boolean) => {
         // console.log(tag, checked)
-        const newSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag)
+        const newSelectedTags = checked ? [...selectedTagsId, tag.id] : selectedTagsId.filter(t => t !== tag.id)
         onChange(newSelectedTags)
     }
     const handleInputChange = (e:any) => {
         setInputValue(e.target!.value)
     }
     const handleInputConfirm = () => {
-        if (inputValue && tagsData.indexOf(inputValue) === -1) {
-            setTagsData([...tagsData, inputValue])
+        const isExitTag = tagsData.some(item => item.name === inputValue)
+        if (inputValue && !isExitTag) {
+            setTagsData([...tagsData, {id:Math.random(),name:inputValue}])
           }
           setInputVisible(false)
           setInputValue('')
@@ -88,11 +89,11 @@ const TagsSection: FC<Props> = (props) => {
             <ol>
                 {tagsData.map(tag => (
                     <CheckableTag
-                        key={tag}
-                        checked={selectedTags.indexOf(tag) > -1}
+                        key={tag.id}
+                        checked={selectedTagsId.indexOf(tag.id) > -1}
                         onChange={checked => tagsHandleChange(tag, checked)}
                     >
-                        {tag}
+                        {tag.name}
                     </CheckableTag>
                 ))}
                 {/* <input ref={inputEl}></input> */}
