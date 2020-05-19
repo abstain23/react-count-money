@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from 'components/Layout'
 
 
@@ -13,16 +13,46 @@ const MyLayout = styled(Layout)`
 display:flex;
 border:1px solid red;
 `
+type categoryType = 0 | 1 
 
-
-// const c = 
-function Money() {
+const Money:React.FC = () => {
+    const [selected, setSelected] = useState({
+        tags: [] as string[],
+        note:'',
+        category: 0 as categoryType,
+        amount: '0'
+    })
+    const handleChange = (obj: Partial<typeof selected>) => {
+        setSelected({
+            ...selected,
+            ...obj
+        })
+    }
+    // handleChange({})
     return (
+        
         <MyLayout>
-            <TagsSection />
-            <NotesSection />
-            <CateGorySection />
-            <NumberPadSection />
+            <div>
+                {/* {selected.tags}
+                <hr/>
+                {selected.note}
+                <hr/>
+                {selected.category === 0 ? '收入' : '支出'}
+                <hr/>
+                {selected.amount} */}
+            </div>
+            <TagsSection value={selected.tags}
+                         onChange={tags => handleChange({tags})}
+                         />
+            <NotesSection value={selected.note}
+                          onChange={note => handleChange({note})}
+            />
+            <CateGorySection value={selected.category as (0 | 1)}
+                             onChange={category => handleChange({category})}
+            />
+            <NumberPadSection value={selected.amount} 
+                              onChange={amount => handleChange({amount})}
+            />
         </MyLayout>
     )
 }

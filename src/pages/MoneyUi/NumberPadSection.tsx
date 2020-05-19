@@ -1,13 +1,20 @@
-import React, { FC, useState, MouseEvent } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import Wrapper from './NumberPadSection/Wrapper'
 
-const NumberPadSection: FC = () => {
-  const [output, _setOutput] = useState<string>('0')
+type Props = {
+  value: string,
+  onChange:(output:string) => void
+}
+
+const NumberPadSection: FC<Props> = (props) => {
+  // const [output, _setOutput] = useState<string>('0')
+  const {value:output, onChange} = props
+
   const setOutput = (output:string) => {
     if(output.length > 16) {
       output = output.slice(0,16)
     }
-    _setOutput(output)
+    onChange(output)
   }
   const handleClick = (e: MouseEvent) => {
     const text = (e.target as HTMLElement).textContent

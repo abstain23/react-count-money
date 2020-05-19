@@ -36,10 +36,15 @@ ol {
         width:100px;
     }
 `
+type Props = {
+    value: string[];
+    onChange:(tags:string[]) => void
+}
 
-const TagsSection: FC = () => {
+const TagsSection: FC<Props> = (props) => {
     const [tagsData, setTagsData] = useState<Array<string>>(['衣', '食', '住', '行'])
-    const [selectedTags, setSelectedTags] = useState<string []>([''])
+    // const [selectedTags, setSelectedTags] = useState<string []>([''])
+    const {value:selectedTags, onChange} = props
     const [inputVisible,setInputVisible] = useState<boolean>(false)
     const [inputValue,setInputValue] = useState<string>('')
     let inputEl:RefObject<Input>= useRef(null)
@@ -59,7 +64,7 @@ const TagsSection: FC = () => {
     const tagsHandleChange = (tag: tagProp, checked: boolean) => {
         // console.log(tag, checked)
         const newSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag)
-        setSelectedTags(newSelectedTags)
+        onChange(newSelectedTags)
     }
     const handleInputChange = (e:any) => {
         setInputValue(e.target!.value)
@@ -75,11 +80,6 @@ const TagsSection: FC = () => {
         setInputVisible(() => {
             return true
         })
-        // console.log(inputVisible)
-
-        // setTimeout(() => {
-        //  inputEl.current!.focus()   
-        // });
     }
     return (
         <Wrapper>

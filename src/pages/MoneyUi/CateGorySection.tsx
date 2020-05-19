@@ -29,21 +29,27 @@ ul {
     }
 }
 `
+type categoryType = 0 | 1 
+type Props = {
+    value: categoryType,
+    onChange:(category: categoryType) => void
+}
 
-const CateGorySection:FC = () => {
+const CateGorySection:FC<Props> = (props) => {
     const tabsMap = {'收入':'', '支出':''}
     type Y = typeof tabsMap
     type X = keyof Y
     // const [tabs] = useState<('收入'| '支出')[]>(['收入','支出'])
     const [tabs] = useState<X[]>(['收入','支出'])
-    const [currentIndex, setCurrentIndex] = useState(0)
+    // const [currentIndex, setCurrentIndex] = useState(0)
+    const {value:currentIndex, onChange} = props
     return (
         <Wrapper>
             <ul>
                 {
-                    tabs.map((tab:'收入'| '支出',index:number) => (
+                    tabs.map((tab:'收入'| '支出',index) => (
                         <li key={tab} 
-                            onClick={() => setCurrentIndex(index)}
+                            onClick={() => onChange(index as categoryType)}
                             className={currentIndex === index ? 'selected' : ''}
                             >{tab}</li>
                     ))

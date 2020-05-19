@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef} from 'react'
+import React, { FC, useRef} from 'react'
 import styled from 'styled-components'
 
 
@@ -24,13 +24,20 @@ padding:0 16px;
     }
 }
 `
+type Props = {
+    value: string,
+    onChange:(note:string) => void
+}
 
-const NotesSection: FC = () => {
-    const [note, setNote] = useState<string>('')
+const NotesSection: FC<Props> = (props) => {
+    // const [note, setNote] = useState<string>('')
+    const {value:note, onChange} = props
     const inputEl = useRef<HTMLInputElement>(null)
     // console.log(note)
     const handleBlur = () => {
-        inputEl.current && setNote(inputEl.current.value)
+        inputEl.current && onChange(inputEl.current.value)
+        inputEl.current!.value =''
+        // console.log(note)
     }
     return (
         <Wrapper>
