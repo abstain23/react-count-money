@@ -1,21 +1,38 @@
 import React, { FC } from 'react'
 import Layout from 'components/Layout'
 import {useTags} from 'customHooks/useTags'
-import {Steps} from 'antd'
+import {Link} from 'react-router-dom'
+import styled from 'styled-components'
 
-const {Step} = Steps
+
+const TagList = styled.ol`
+font-size:16px;
+border-bottom:1px solid #d5d5d9;
+line-height:20px;
+margin-left:16px;
+> a{
+    padding: 12px 16px 12px 0;
+    align-items: center;	      
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+`
 
 const Tags:FC = () => {
     const {tagsData, setTagsData} = useTags()
     return (
         <Layout>
-           <Steps direction='vertical' size='small'>
-               {tagsData.map(tag => (
-                   <Step key={tag} status='finish' title={tag} description='支出'/>
-               ))}
-           </Steps>
+          <TagList>
+            {tagsData.map(tag => (
+              <Link to={'/tagEdit/' + tag}>
+                <li key={tag} className='oneline'>{tag}nidasdsadsadsadsadasdsadasdasdasdaddadsadsadsads</li>
+              </Link>
+          ))}
+          </TagList>
         </Layout>
     )
 }
 
 export default Tags
+ 

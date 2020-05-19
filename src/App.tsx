@@ -9,13 +9,17 @@ import Tags from 'pages/Tags'
 import Money from 'pages/Money'
 import Statistics from 'pages/Statistics'
 import NoMatch from 'pages/NoMatch'
+import TagEdit from 'pages/TagEdit';
 
 
 export default function App() {
   return (
     <Router>
         <Switch>
-          <Route path="/tags">
+          <Route path='/tagEdit/:id'>
+            <TagEdit/>
+          </Route>
+          <Route path="/tags" exact>
             <Tags />
           </Route>
           <Route path="/money">
