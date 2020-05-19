@@ -2,13 +2,14 @@ import React, { FC, MouseEvent } from 'react'
 import Wrapper from './NumberPadSection/Wrapper'
 
 type Props = {
-  value: string,
-  onChange:(output:string) => void
+  value: string;
+  onChange:(output:string) => void;
+  onOk?:(text:string) => void
 }
 
 const NumberPadSection: FC<Props> = (props) => {
   // const [output, _setOutput] = useState<string>('0')
-  const {value:output, onChange} = props
+  const {value:output, onChange, onOk} = props
 
   const setOutput = (output:string) => {
     if(output.length > 16) {
@@ -44,7 +45,7 @@ const NumberPadSection: FC<Props> = (props) => {
         }
         break
       case 'OK':
-        console.log(text)
+        onOk && onOk(text)
         break
       case '清空':
         setOutput('0')

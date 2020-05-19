@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, RefObject, FC } from 'react'
 import styled from 'styled-components'
 import { PlusOutlined } from '@ant-design/icons'
 import { Tag, Input } from 'antd'
+import {useTags} from 'customHooks/useTags'
 const { CheckableTag } = Tag
 
 const Wrapper = styled.section`
@@ -42,8 +43,9 @@ type Props = {
 }
 
 const TagsSection: FC<Props> = (props) => {
-    const [tagsData, setTagsData] = useState<Array<string>>(['衣', '食', '住', '行'])
+    // const [tagsData, setTagsData] = useState<Array<string>>(['衣', '食', '住', '行'])
     // const [selectedTags, setSelectedTags] = useState<string []>([''])
+    const {tagsData, setTagsData} = useTags()
     const {value:selectedTags, onChange} = props
     const [inputVisible,setInputVisible] = useState<boolean>(false)
     const [inputValue,setInputValue] = useState<string>('')

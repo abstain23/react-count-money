@@ -84,3 +84,18 @@ useEffect(() => {
 
 受控组件时时监听 `value onChange`
 非受控组件 `defaultValue onBlur`
+
+
+#### Partial 代表部分
+
+```ts
+const [selected, setSelected] = useState({
+        tags: [] as string[],
+        note:'',
+        category: 0 as categoryType,
+        amount: '0'
+    })
+  obj: Partial<typeof selected>
+
+  obj可以是对象里面的任意一项
+```

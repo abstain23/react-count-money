@@ -51,6 +51,7 @@ const Money:React.FC = () => {
                              onChange={category => handleChange({category})}
             />
             <NumberPadSection value={selected.amount} 
+                              onOk={(text:string) => console.log(text)}
                               onChange={amount => handleChange({amount})}
             />
         </MyLayout>
