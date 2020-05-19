@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { PlusOutlined } from '@ant-design/icons'
 import { Tag, Input } from 'antd'
 import {useTags} from 'customHooks/useTags'
+import createId from 'lib/createId'
+
 const { CheckableTag } = Tag
 
 const Wrapper = styled.section`
@@ -74,7 +76,7 @@ const TagsSection: FC<Props> = (props) => {
     const handleInputConfirm = () => {
         const isExitTag = tagsData.some(item => item.name === inputValue)
         if (inputValue && !isExitTag) {
-            setTagsData([...tagsData, {id:Math.random(),name:inputValue}])
+            setTagsData([...tagsData, {id:createId(),name:inputValue}])
           }
           setInputVisible(false)
           setInputValue('')
