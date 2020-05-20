@@ -4,7 +4,7 @@ import {useTags} from 'customHooks/useTags'
 import {useHistory} from 'react-router-dom'
 import styled from 'styled-components'
 import {Button} from 'antd'
-import { EditFilled } from '@ant-design/icons';
+import { EditFilled, DeleteFilled } from '@ant-design/icons';
 
 const Header = styled.header`
 background:#fff;
@@ -37,6 +37,7 @@ margin-left:16px;
 li {
   padding: 12px 16px 12px 0; 
   display:flex;
+  justify-content:space-between;
   align-items:center;
   box-shadow: inset 0 -0.5px 0.5px -0.5px rgba(0,0,0,.3);
   .type {
@@ -55,12 +56,19 @@ li {
   display:flex;
   flex-direction:column;
   font-size:14px;
+  max-width: 60%;
+  }
+.btnWrapper {
+  width:72px;
+}
+.ant-btn {
+  margin-right:4px;
   }
 }
 `
 
 const Tags:FC = () => {
-    const {tagsData, setTagsData} = useTags()
+    const {tagsData, findTagById} = useTags()
     const history = useHistory()
     const handleEditClick = (id:number) => {
       history.push('/tags/'+ id)
@@ -82,12 +90,15 @@ const Tags:FC = () => {
           <TagList>
             {tagsData.map(tag => (
                     <li className='oneline' key={tag.id}>
-                      <div className='type'>支出</div>
+                      <div className='type'>{findTagById(tag.id)?.name }</div>
                       <div className='content'>
                         <span>1111000</span>
-                        <span>备注：</span>
+                        <span className='oneline'>备注：dsdsdasdasdasdasdassasdasdasdasdddasdasdasdsadasdasdasdasdasdasdasdasdas</span>
                       </div>
+                      <div className='btnWrapper'>
                       <Button shape='circle' icon={<EditFilled/>} onClick={() => handleEditClick(tag.id)}></Button>
+                      <Button shape='circle' icon={<DeleteFilled/>} onClick={() => handleEditClick(tag.id)}></Button>
+                      </div>
                     </li>
           ))}
           </TagList>
