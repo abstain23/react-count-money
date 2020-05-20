@@ -15,6 +15,13 @@ border:1px solid red;
 `
 type categoryType = 0 | 1 
 
+// type tagObj = {
+//     tagsId:number,
+//     category:categoryType,
+//     note?:string,
+//     total?:string
+// }
+
 const Money:React.FC = () => {
     const [selected, setSelected] = useState({
         tagsId: [] as number[],
@@ -27,8 +34,18 @@ const Money:React.FC = () => {
             ...selected,
             ...obj
         })
+        // console.log(o)
     }
     // handleChange({})
+    const handleSubmit = (total:string) => {
+        // const tagObj:Partial<typeof selected> = {
+        //     tagsId:[1],
+        // }
+        let tagObj = {...selected,total}
+        let localRecord = JSON.parse(window.localStorage.getItem('listRecord') || '[]')
+        localRecord.push(tagObj)
+        window.localStorage.setItem('listRecord',JSON.stringify(localRecord))
+    }
     return (
         
         <MyLayout>
@@ -51,7 +68,7 @@ const Money:React.FC = () => {
                              onChange={category => handleChange({category})}
             />
             <NumberPadSection value={selected.amount} 
-                              onOk={(text:string) => console.log(text)}
+                              onOk={(total:string) => handleSubmit(total)}
                               onChange={amount => handleChange({amount})}
             />
         </MyLayout>

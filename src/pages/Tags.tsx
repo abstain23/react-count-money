@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import Layout from 'components/Layout'
-import {useTags} from 'customHooks/useTags'
+// import {useTags} from 'customHooks/useTags'
 import {useHistory} from 'react-router-dom'
 import styled from 'styled-components'
 import {Button} from 'antd'
@@ -66,12 +66,23 @@ li {
   }
 }
 `
+type tagObj = {
+    tagsId:number[],
+    category: 0 | 1,
+    note?:string,
+    total?:string,
+    amount?:string
+}
 
 const Tags:FC = () => {
-    const {tagsData, findTagById} = useTags()
+    // const {findTagById} = useTags()
+    const tagsData = JSON.parse(window.localStorage.getItem('listRecord') || '[]') as tagObj[]
     const history = useHistory()
     const handleEditClick = (id:number) => {
       history.push('/tags/'+ id)
+    }
+    const handleDeleteClick = (id:number) => {
+      console.log(id)
     }
     return (
         <Layout>
@@ -88,16 +99,16 @@ const Tags:FC = () => {
            </div>
           </Header>
           <TagList>
-            {tagsData.map(tag => (
-                    <li className='oneline' key={tag.id}>
-                      <div className='type'>{findTagById(tag.id)?.name }</div>
+            {tagsData.map((tag,index) => (
+                    <li className='oneline' key={tag.tagsId.toString() + Math.random()}>
+                      <div className='type'>{tag.category === 0 ? '纳' : '出' }</div>
                       <div className='content'>
-                        <span>1111000</span>
-                        <span className='oneline'>备注：dsdsdasdasdasdasdassasdasdasdasdddasdasdasdsadasdasdasdasdasdasdasdasdas</span>
+                      <span>金额：{tag.total}</span>
+                      <span className='oneline'>备注：{tag.note}</span>
                       </div>
                       <div className='btnWrapper'>
-                      <Button shape='circle' icon={<EditFilled/>} onClick={() => handleEditClick(tag.id)}></Button>
-                      <Button shape='circle' icon={<DeleteFilled/>} onClick={() => handleEditClick(tag.id)}></Button>
+                      <Button shape='circle' icon={<EditFilled/>} onClick={() => handleEditClick(index)}></Button>
+                      <Button shape='circle' icon={<DeleteFilled/>} onClick={() => handleDeleteClick(index)}></Button>
                       </div>
                     </li>
           ))}

@@ -36,7 +36,7 @@ const NotesSection: FC<Props> = (props) => {
     // console.log(note)
     const handleBlur = () => {
         inputEl.current && onChange(inputEl.current.value)
-        inputEl.current!.value =''
+        // inputEl.current!.value =''
         // console.log(note)
     }
     return (
