@@ -12,15 +12,18 @@ try {importAll(require.context('icons', true, /\.svg$/));} catch (error) {consol
 //     fill:string;
 // }
 
-type IconProps = {
-    name:string;
-    fill?:string;
-} & React.SVGAttributes<SVGAElement>
+type Props = {
+    name?:string
+} & React.SVGAttributes<SVGElement>
+// type Props = {
+//     name?: string
+//   } & React.SVGAttributes<SVGElement>
 
-function Icon(props:IconProps) {
+function Icon(props:Props) {
+    const {name, children, ...rest} = props
     return (
-        <svg className='icon'>
-            <use xlinkHref={'#'+props.name} fill={props.fill}/>
+        <svg className='icon' {...rest}>
+            {props.name && <use xlinkHref={'#'+props.name} />}
         </svg>
     )
 }

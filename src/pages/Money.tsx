@@ -33,7 +33,7 @@ const Money:React.FC = () => {
         
         <MyLayout>
             <div>
-                {/* {selected.tags}
+                {/* {selected.tagsId}
                 <hr/>
                 {selected.note}
                 <hr/>

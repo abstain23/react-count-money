@@ -9,7 +9,7 @@ const { CheckableTag } = Tag
 
 const Wrapper = styled.section`
 background:#fff;
-padding:12px 4px;
+padding:10px 4px;
 flex-grow:1;
 display:flex;
 flex-direction:column;
