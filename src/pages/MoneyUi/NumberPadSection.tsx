@@ -1,5 +1,6 @@
 import React, { FC, MouseEvent } from 'react'
 import Wrapper from './NumberPadSection/Wrapper'
+import countNum from 'lib/countNum'
 
 type Props = {
   value: string;
@@ -45,7 +46,8 @@ const NumberPadSection: FC<Props> = (props) => {
         }
         break
       case 'OK':
-        onOk && onOk(text)
+        onOk && onOk(countNum(output))
+        setOutput('0')
         break
       case '清空':
         setOutput('0')
@@ -61,6 +63,14 @@ const NumberPadSection: FC<Props> = (props) => {
         } else {
           setOutput(output.slice(0, -1))
         }
+        break
+      case '+':
+        if(output[output.length - 1] === '+' || output[output.length - 1] === '-') return
+        setOutput(output+text)
+        break
+      case '-':
+        if(output[output.length - 1] === '-' || output[output.length - 1] === '+') return
+        setOutput(output+text)
         break
     }
 
@@ -80,9 +90,11 @@ const NumberPadSection: FC<Props> = (props) => {
         <button>7</button>
         <button>8</button>
         <button>9</button>
-        <button className='ok'>OK</button>
-        <button className='zero'>0</button>
         <button className='point'>.</button>
+        <button>0</button>
+        <button>-</button>
+        <button>+</button>
+        <button>OK</button>
       </div>
     </Wrapper>
   )

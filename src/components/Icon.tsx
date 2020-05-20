@@ -15,7 +15,7 @@ try {importAll(require.context('icons', true, /\.svg$/));} catch (error) {consol
 type IconProps = {
     name:string;
     fill?:string;
-}
+} & React.SVGAttributes<SVGAElement>
 
 function Icon(props:IconProps) {
     return (

@@ -25,8 +25,8 @@ const Tags:FC = () => {
         <Layout>
           <TagList>
             {tagsData.map(tag => (
-              <Link to={'/tagEdit/' + tag.id} key={tag.id}>
-                <li className='oneline'>{tag.id}nidasdsadsadsadsadasdsadasdasdasdaddadsadsadsads</li>
+              <Link to={'/tags/' + tag.id} key={tag.id}>
+                <li className='oneline'>{tag.id}-{tag.name}</li>
               </Link>
           ))}
           </TagList>
