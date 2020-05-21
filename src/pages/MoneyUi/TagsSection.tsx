@@ -4,6 +4,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Tag, Input } from 'antd'
 import {useTags} from 'customHooks/useTags'
 import createId from 'lib/createId'
+import {scrollTop} from 'lib/scrollTop'
 
 const { CheckableTag } = Tag
 
@@ -11,9 +12,11 @@ const Wrapper = styled.section`
 background:#fff;
 padding:10px 4px;
 flex-grow:1;
+flex-shrink:1;
+overflow:auto;
 display:flex;
 flex-direction:column;
-justify-content:flex-end;
+/* justify-content:flex-end; */
 align-items:left;
 .ant-tag{
         border: 1px solid #d9d9d9;
@@ -52,13 +55,27 @@ const TagsSection: FC<Props> = (props) => {
     const [inputVisible,setInputVisible] = useState<boolean>(false)
     const [inputValue,setInputValue] = useState<string>('')
     let inputEl:RefObject<Input>= useRef(null)
+    const wrapperRef = useRef<HTMLElement>(null)
     useEffect(() => {
         // console.log('cc')
         // console.log(inputEl.current)
         if(inputVisible) {
             inputEl.current && inputEl.current.focus()
         }
+          if(wrapperRef.current) {
+            // wrapperRef.current.scrollTop = 999
+            // console.log(wrapperRef.current.scrollTop)
+            scrollTop(wrapperRef.current)
+          }
     }, [inputVisible])
+
+    useEffect(() => {
+        if(wrapperRef.current) {
+            // wrapperRef.current.scrollTop = 999
+            // console.log(wrapperRef.current.scrollTop)
+            scrollTop(wrapperRef.current)
+          }
+    },[tagsData])
     // const obj = {name:'xx'}
     // const c = (keyof obj)
     // const tagsDataType = ['衣','食','住','行'] as const
@@ -80,6 +97,10 @@ const TagsSection: FC<Props> = (props) => {
           }
           setInputVisible(false)
           setInputValue('')
+        //   if(wrapperRef.current) {
+        //     wrapperRef.current.scrollTop = 999
+        //   }
+        //   console.log(wrapperRef.current?.scrollTop)
     }
     const showInput = () => {
         setInputVisible(() => {
@@ -87,7 +108,7 @@ const TagsSection: FC<Props> = (props) => {
         })
     }
     return (
-        <Wrapper>
+        <Wrapper ref={wrapperRef}>
             <ol>
                 {tagsData.map(tag => (
                     <CheckableTag

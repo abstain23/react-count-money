@@ -1,4 +1,4 @@
-import React,{useRef,useEffect} from 'react'
+import React from 'react'
 import Nav from 'components/Nav'
 import styled from 'styled-components'
 
@@ -23,18 +23,18 @@ type Props = {
 }
 
 const Layout:React.FC<Props> = (props) => {
-    const mainRef = useRef<HTMLDivElement>(null)
-    useEffect(() =>{
-       setTimeout(()=> {
-        if(mainRef.current) {
-            mainRef.current.scrollTop = props.scrollTop!
-            console.log(mainRef.current.scrollTop)
-        }
-       }, 0)
-    },[props.scrollTop])
+    // const mainRef = useRef<HTMLDivElement>(null)
+    // useEffect(() =>{
+    //    setTimeout(()=> {
+    //     if(mainRef.current) {
+    //         mainRef.current.scrollTop = props.scrollTop!
+    //         console.log(mainRef.current.scrollTop)
+    //     }
+    //    }, 0)
+    // },[props.scrollTop])
     return (
         <Wrapper>
-            <Main ref={mainRef}>
+            <Main>
                 {props.children}
             </Main>
             <Nav></Nav>

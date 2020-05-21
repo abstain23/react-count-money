@@ -28,6 +28,12 @@ ul {
         }
     }
 }
+@media (max-height:640px) {
+  font-size:18px;
+  ul > li {
+    padding: 14px 0
+  }
+}
 `
 type categoryType = 0 | 1 
 type Props = {

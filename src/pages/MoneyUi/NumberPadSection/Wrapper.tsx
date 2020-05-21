@@ -61,6 +61,11 @@ flex-direction:column;
           background:#ccc;
         }
   }
+  @media (max-height:570px) {
+    > button {
+      height:40px;
+    }
+  }
 }
 `
 

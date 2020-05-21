@@ -23,6 +23,11 @@ padding:0 16px;
         }
     }
 }
+@media (max-height:570px) {
+    > label  input {
+        height:56px;
+    }
+}
 `
 type Props = {
     value: string,
