@@ -47,7 +47,7 @@ const NumberPadSection: FC<Props> = (props) => {
         break
       case 'OK':
         onOk && onOk(countNum(output))
-        setOutput('0')
+        // setOutput('0')
         break
       case '清空':
         setOutput('0')
