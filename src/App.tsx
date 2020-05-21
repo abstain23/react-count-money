@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   HashRouter as Router,
   Switch,
@@ -10,9 +10,15 @@ import Money from 'pages/Money'
 import Statistics from 'pages/Statistics'
 import NoMatch from 'pages/NoMatch'
 import TagEdit from 'pages/TagEdit';
-
+import {isPC} from 'lib/isPc'
+import { message } from 'antd';
 
 export default function App() {
+  useEffect(() => {
+    if(!isPC()) {
+      message.warn({content:'建议使用手机或手机模拟器观看'})
+    }
+  },[])
   return (
     <Router>
         <Switch>
