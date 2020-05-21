@@ -3,8 +3,9 @@ import Layout from 'components/Layout'
 // import {useTags} from 'customHooks/useTags'
 import {useHistory} from 'react-router-dom'
 import styled from 'styled-components'
-import {Button} from 'antd'
+import {Button, Popconfirm, message} from 'antd'
 import { EditFilled, DeleteFilled } from '@ant-design/icons';
+import {useRecords} from 'customHooks/useRecords'
 
 const Header = styled.header`
 background:#fff;
@@ -76,7 +77,7 @@ type tagObj = {
 
 const Tags:FC = () => {
     // const {findTagById} = useTags()
-    const tagsData = JSON.parse(window.localStorage.getItem('listRecord') || '[]') as tagObj[]
+    const {records} = useRecords()
     const history = useHistory()
     const handleEditClick = (id:number) => {
       history.push('/tags/'+ id)
@@ -99,7 +100,7 @@ const Tags:FC = () => {
            </div>
           </Header>
           <TagList>
-            {tagsData.map((tag,index) => (
+            {records.map((tag,index) => (
                     <li className='oneline' key={tag.tagsId.toString() + Math.random()}>
                       <div className='type'>{tag.category === 0 ? '纳' : '出' }</div>
                       <div className='content'>
@@ -108,7 +109,15 @@ const Tags:FC = () => {
                       </div>
                       <div className='btnWrapper'>
                       <Button shape='circle' icon={<EditFilled/>} onClick={() => handleEditClick(index)}></Button>
-                      <Button shape='circle' icon={<DeleteFilled/>} onClick={() => handleDeleteClick(index)}></Button>
+                      <Popconfirm  title="您确定要删除该项吗？" 
+                                   okText="Yes" 
+                                   cancelText="No" 
+                                   placement='bottomRight'
+                                   onCancel={() => {message.info({content:'取消删除！',duration:1})}}
+                                   onConfirm={() => {handleDeleteClick(index)}}
+                                   >
+                      <Button shape='circle' icon={<DeleteFilled/>}></Button>
+                      </Popconfirm>
                       </div>
                     </li>
           ))}

@@ -13,7 +13,7 @@ export const useTags = () => {
   // console.log('初始化')
   const [tagsData, setTagsData] = useState<Array<tagType>>([])
   useEffect(() => { //didMount
-    console.log('didmount')
+    console.log('tags didmount')
     let localTagsData:tagType[] = JSON.parse(window.localStorage.getItem('tagsData')||'[]') 
     if(localTagsData.length === 0) {
       localTagsData =  [
@@ -39,6 +39,7 @@ export const useTags = () => {
   // },[tagsData])
 
   useUpdate(() => {
+    console.log('tags uapdate')
     window.localStorage.setItem('tagsData', JSON.stringify(tagsData))
   }, [tagsData])
   const findTagById = (id:number) => tagsData.find(item => item.id === id)

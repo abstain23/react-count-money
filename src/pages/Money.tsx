@@ -8,6 +8,10 @@ import TagsSection from './MoneyUi/TagsSection'
 import NotesSection from './MoneyUi/NotesSection'
 import CateGorySection from './MoneyUi/CateGorySection'
 import NumberPadSection from './MoneyUi/NumberPadSection'
+import {useRecords ,newRecordItem} from 'customHooks/useRecords'
+import { useHistory } from 'react-router-dom'
+
+
 
 const MyLayout = styled(Layout)`
 display:flex;
@@ -21,14 +25,16 @@ type categoryType = 0 | 1
 //     note?:string,
 //     total?:string
 // }
-
+type selectedType = Omit<newRecordItem, 'total'>
 const Money:React.FC = () => {
+    const history = useHistory()
     const [selected, setSelected] = useState({
         tagsId: [] as number[],
         note:'',
         category: 0 as categoryType,
         amount: '0'
-    })
+    } as selectedType)
+    const {addRecord} = useRecords()
     const handleChange = (obj: Partial<typeof selected>) => {
         setSelected({
             ...selected,
@@ -42,9 +48,18 @@ const Money:React.FC = () => {
         //     tagsId:[1],
         // }
         let tagObj = {...selected,total}
-        let localRecord = JSON.parse(window.localStorage.getItem('listRecord') || '[]')
-        localRecord.push(tagObj)
-        window.localStorage.setItem('listRecord',JSON.stringify(localRecord))
+        // console.log(tagObj)
+    // console.log(addRecord(tagObj))
+        // if(addRecord(tagObj)) {
+        //     console.log('11')
+        //     // history.push('/tags')
+        //     setTimeout(() => {
+        //         history.push('/tags')
+        //     })
+        // }
+        addRecord(tagObj).then(() => {
+            history.push('/tags')
+        })
     }
     return (
         

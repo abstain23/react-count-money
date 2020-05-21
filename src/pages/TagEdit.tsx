@@ -85,7 +85,7 @@ const TagEdit:FC = () => {
     listRecord[parseInt(id)] = obj
     // console.log(listRecord[parseInt(id)])
     window.localStorage.setItem('listRecord',JSON.stringify(listRecord))
-    message.success('更改成功！')
+    message.success({content:'更新成功！',duration:1})
     history.goBack()
   }
   return (
