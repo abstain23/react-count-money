@@ -36,7 +36,7 @@ export const useRecords = () => {
   useUpdate(() => {
     console.log('record update')
     window.localStorage.setItem('listRecord', JSON.stringify(records))
-  },[records])
+  },records)
 
   const addRecord = (newRecord:newRecordItem):Promise<{}> => {
     return new Promise((resolve,reject) => {

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 
-const useUpdate = (fn:() => void, deps:any[]) => {
+const useUpdate = (fn:() => void, deps:any) => {
   const count = useRef(0)
   useEffect(() => {
     count.current += 1
@@ -11,8 +11,7 @@ const useUpdate = (fn:() => void, deps:any[]) => {
     if(count.current > 1) {
       fn()
     }
-  // eslint-disable-next-line
-  }, deps)
+  }, [fn,deps])
 }
 
 export default useUpdate

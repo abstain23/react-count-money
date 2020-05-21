@@ -42,7 +42,7 @@ export const useTags = () => {
   useUpdate(() => {
     console.log('tags uapdate')
     window.localStorage.setItem('tagsData', JSON.stringify(tagsData))
-  }, [tagsData])
+  }, tagsData)
   const findTagById = (id:number) => tagsData.find(item => item.id === id)
   return {tagsData, setTagsData, findTagById}
 }
