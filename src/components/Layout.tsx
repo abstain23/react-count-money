@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useRef,useEffect} from 'react'
 import Nav from 'components/Nav'
 import styled from 'styled-components'
 
@@ -15,18 +15,26 @@ display:flex;
 flex-direction:column;
 .ant-steps {
     display:flex;
-    
 }
 `
 
-// type Props = {
-//     children:ReactNode | JSX.Element[] | JSX.Element
-// }
+type Props = {
+    scrollTop?:number
+}
 
-const Layout:React.FC = (props) => {
+const Layout:React.FC<Props> = (props) => {
+    const mainRef = useRef<HTMLDivElement>(null)
+    useEffect(() =>{
+       setTimeout(()=> {
+        if(mainRef.current) {
+            mainRef.current.scrollTop = props.scrollTop!
+            console.log(mainRef.current.scrollTop)
+        }
+       }, 0)
+    },[props.scrollTop])
     return (
         <Wrapper>
-            <Main>
+            <Main ref={mainRef}>
                 {props.children}
             </Main>
             <Nav></Nav>

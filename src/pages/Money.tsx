@@ -63,7 +63,7 @@ const Money:React.FC = () => {
     }
     return (
         
-        <MyLayout>
+        <MyLayout scrollTop = {999}>
             <div>
                 {/* {selected.tagsId}
                 <hr/>
