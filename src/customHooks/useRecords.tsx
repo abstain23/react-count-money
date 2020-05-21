@@ -2,13 +2,18 @@ import {useState, useEffect} from 'react'
 import useUpdate from './useUpdate'
 import {message, Popconfirm} from 'antd'
 import { useHistory } from 'react-router-dom'
-type recordItemType = {
+
+
+
+
+export type recordItemType = {
   tagsId: number[],
   note:string,
   category: 1 | 0,
   amount: string,
   total: string,
-  creatAt: string
+  creatAt: string,
+  id?:number
 }
 
  export type newRecordItem = Omit<recordItemType,'createAt'>
@@ -37,11 +42,11 @@ export const useRecords = () => {
     return new Promise((resolve,reject) => {
       if(newRecord.tagsId.length === 0) {
         message.error({content:'请至少选择一个标签', duration:1})
-        reject()
+        return reject()
       }
       if(newRecord.total === '0') {
        message.error({content:'请输入金额',duration:1})
-       reject()
+       return reject()
       }
       const record = {...newRecord, creatAt:(new Date()).toString()}
       const newRecords = [...records, record]
@@ -52,6 +57,13 @@ export const useRecords = () => {
       resolve()
     })
   }
-  return {addRecord, records}
+
+  const delRecord = (id:number) => {
+    records.splice(id,1)
+    window.localStorage.setItem('listRecord', JSON.stringify(records))
+    setRecords([...records])
+    message.success({content:'删除成功',duration:1})
+  }
+  return {addRecord, records, delRecord}
 }
 

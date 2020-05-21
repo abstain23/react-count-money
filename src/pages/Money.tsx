@@ -59,7 +59,7 @@ const Money:React.FC = () => {
         // }
         addRecord(tagObj).then(() => {
             history.push('/tags')
-        })
+        }).catch(() => console.log('缺少必填项'))
     }
     return (
         

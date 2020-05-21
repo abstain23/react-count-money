@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import Layout from 'components/Layout'
 import Icon from 'components/Icon'
 import {Button,message} from 'antd'
+import { useTags } from 'customHooks/useTags'
+import day from 'dayjs'
 
 const Header = styled.header`
 background:#fff;
@@ -56,16 +58,21 @@ type tagObj = {
   category: 0 | 1,
   note?:string,
   total?:string,
-  amount?:string
+  amount?:string,
+  creatAt:string
 }
 
 const TagEdit:FC = () => {
   const {id} = useParams<Params>()
   // const [tagObj,setTah] = useState({})
+  const {findTagById} = useTags()
   const inputTotal = useRef<HTMLInputElement>(null)
   const inputNote = useRef<HTMLInputElement>(null)
   const listRecord:tagObj[] = JSON.parse(window.localStorage.getItem('listRecord') || '[]')
-  const {category, note, total } = listRecord[parseInt(id)] || {} as tagObj
+  const {category, note, total, tagsId, creatAt } = listRecord[parseInt(id)] || {} as tagObj
+  // console.log(listRecord[parseInt(id)])
+  const tagsName = tagsId.map(tagId => findTagById(tagId)?.name)
+  // console.log(tagsName)
   const history = useHistory()
   let submitObj:{total?:string,note?:string} = {};
   const handdeClick = () => {
@@ -92,7 +99,7 @@ const TagEdit:FC = () => {
     <Layout>
       <Header>
         <Icon name='back' onClick={handdeClick}/>
-        <span>编辑-{category + '-' + note}</span>
+        <span>编辑-{category === 0 ? '收入' : '支出' + '-'}{note && `-${note}`}</span>
       </Header>
       <Main>
         <ul>
@@ -104,6 +111,12 @@ const TagEdit:FC = () => {
           </li>
           <li>
             <label>
+              <span className='name'>{category === 0? '来源' : '用途'}</span>
+              <span className='type'>{tagsName && tagsName.join('，')}</span>
+            </label>
+          </li>
+          <li>
+            <label>
               <span className='name'>金额</span>
               <input className='type' defaultValue={total} onBlur={handletoatlChange} ref={inputTotal}/>
             </label>
@@ -111,7 +124,7 @@ const TagEdit:FC = () => {
           <li>
           <label>
               <span className='name'>日期</span>
-              <span className='type'>{new Date().toUTCString()}</span>
+              <span className='type'>{day(creatAt).format('YYYY-MM-DD')}</span>
             </label>
           </li>
           <li>

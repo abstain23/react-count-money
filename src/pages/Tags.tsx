@@ -1,11 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC, Fragment } from 'react'
 import Layout from 'components/Layout'
 // import {useTags} from 'customHooks/useTags'
 import {useHistory} from 'react-router-dom'
 import styled from 'styled-components'
 import {Button, Popconfirm, message} from 'antd'
 import { EditFilled, DeleteFilled } from '@ant-design/icons';
-import {useRecords} from 'customHooks/useRecords'
+import {useRecords, recordItemType} from 'customHooks/useRecords'
+import day from 'dayjs'
 
 const Header = styled.header`
 background:#fff;
@@ -67,9 +68,16 @@ li {
   }
 }
 `
+const Title = styled.h4`
+  font-size: 16px;
+  line-height: 20px;
+  padding-top: 8px;
+`;
+
 type tagObj = {
     tagsId:number[],
     category: 0 | 1,
+    id?:number,
     note?:string,
     total?:string,
     amount?:string
@@ -77,49 +85,86 @@ type tagObj = {
 
 const Tags:FC = () => {
     // const {findTagById} = useTags()
-    const {records} = useRecords()
+    const {records, delRecord} = useRecords()
+    records.forEach((r,i) => r.id = i )
     const history = useHistory()
+    const hash:{[k:string]:recordItemType[]} = {}
+    // const inComeArr:number[] = records.filter(r => {
+    //   return r.category === 1
+    // }).map(item => parseFloat(item.total))
+    // const allIncome:number = inComeArr.reduce((a,b) => a + b,0)
+    // 总收入
+    const allIncome:number = records.filter(r => {
+        return r.category === 0
+      }).map(item => parseFloat(item.total)).reduce((a,b) => a + b,0)
+    // console.log(allIncome)
+    // 总支出
+    const allOutlay:number =  records.filter(r => {
+      return r.category === 1
+    }).map(item => parseFloat(item.total)).reduce((a,b) => a + b,0)
+
+    records.forEach(r => {
+      const key = day(r.creatAt).format('YYYY-MM-DD')
+      if(!(key in hash)) {
+        hash[key] = []
+      }
+      hash[key].push(r)
+    })
+    const array = Object.entries(hash).sort((a,b) => {
+      if(a[0] === b[0]) return 0
+      if(a[0] > b[0]) return -1
+      if(a[0] < b[0]) return 1
+      return 0
+    })
+    // console.log(array)
     const handleEditClick = (id:number) => {
       history.push('/tags/'+ id)
     }
     const handleDeleteClick = (id:number) => {
-      console.log(id)
+      delRecord(id)
     }
     return (
         <Layout>
           <Header>
            <div className='total'>
              <div>
-               <span className='label'>收入</span>
-               <span className='value'>1111</span>
+               <span className='label'>总收入</span>
+               <span className='value'>{allIncome}</span>
              </div>
              <div>
-               <span className='label'>支出</span>
-               <span className='value'>1111</span>
+               <span className='label'>总支出</span>
+              <span className='value'>{allOutlay}</span>
              </div>
            </div>
           </Header>
           <TagList>
-            {records.map((tag,index) => (
-                    <li className='oneline' key={tag.tagsId.toString() + Math.random()}>
-                      <div className='type'>{tag.category === 0 ? '纳' : '出' }</div>
-                      <div className='content'>
-                      <span>金额：{tag.total}</span>
-                      <span className='oneline'>备注：{tag.note}</span>
-                      </div>
-                      <div className='btnWrapper'>
-                      <Button shape='circle' icon={<EditFilled/>} onClick={() => handleEditClick(index)}></Button>
-                      <Popconfirm  title="您确定要删除该项吗？" 
-                                   okText="Yes" 
-                                   cancelText="No" 
-                                   placement='bottomRight'
-                                   onCancel={() => {message.info({content:'取消删除！',duration:1})}}
-                                   onConfirm={() => {handleDeleteClick(index)}}
-                                   >
-                      <Button shape='circle' icon={<DeleteFilled/>}></Button>
-                      </Popconfirm>
-                      </div>
-                    </li>
+            {array.map(([date, records]) => (
+                    <Fragment key={date}>
+                      <Title>{date}</Title>
+                      {records.map(tag => (
+                        <li className='oneline' key={tag.tagsId.toString() + Math.random()}>
+                        <div className='type'>{tag.category === 0 ? '纳' : '出' }</div>
+                        <div className='content'>
+                        <span>金额：{tag.total}</span>
+                        <span className='oneline'>备注：{tag.note}</span>
+                        </div>
+                        <div className='btnWrapper'>
+                        <Button shape='circle' icon={<EditFilled/>} onClick={() => handleEditClick(tag.id!)}></Button>
+                        <Popconfirm  title="您确定要删除该项吗？" 
+                                     okText="Yes" 
+                                     cancelText="No" 
+                                     placement='bottomRight'
+                                     onCancel={() => {message.info({content:'取消删除！',duration:1})}}
+                                     onConfirm={() => {handleDeleteClick(tag.id!)}}
+                                     >
+                        <Button shape='circle' icon={<DeleteFilled/>}></Button>
+                        </Popconfirm>
+                        </div>
+                      </li>
+                      ))}
+                    </Fragment>
+                    
+                    
           ))}
           </TagList>
         </Layout>
