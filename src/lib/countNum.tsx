@@ -1,5 +1,6 @@
 const countNum = (numSting:string):string => {
-  return eval(numSting).toString()
+  // eslint-disable-next-line
+  return eval(numSting).toString() 
 }
 
 export default countNum

@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import useUpdate from './useUpdate'
-import {message, Popconfirm} from 'antd'
-import { useHistory } from 'react-router-dom'
+import {message} from 'antd'
+// import { useHistory } from 'react-router-dom'
 
 
 
@@ -20,7 +20,7 @@ export type recordItemType = {
 
 
 export const useRecords = () => {
-  const history = useHistory()
+  // const history = useHistory()
   const [records, setRecords] = useState<recordItemType[]>([])
   useEffect(() => {
     console.log('record did monut')

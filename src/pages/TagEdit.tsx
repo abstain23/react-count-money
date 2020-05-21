@@ -99,7 +99,7 @@ const TagEdit:FC = () => {
     <Layout>
       <Header>
         <Icon name='back' onClick={handdeClick}/>
-        <span>编辑-{category === 0 ? '收入' : '支出' + '-'}{note && `-${note}`}</span>
+        <span>{category === 0 ? `编辑-收入` : '编辑-支出'}{note && `-${note}`}</span>
       </Header>
       <Main>
         <ul>

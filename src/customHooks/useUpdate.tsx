@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 
 const useUpdate = (fn:() => void, deps:any[]) => {
@@ -11,6 +11,7 @@ const useUpdate = (fn:() => void, deps:any[]) => {
     if(count.current > 1) {
       fn()
     }
+  // eslint-disable-next-line
   }, deps)
 }
 
