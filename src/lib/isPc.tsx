@@ -1,6 +1,6 @@
 export function isPC():boolean {
   var userAgentInfo = navigator.userAgent;
-  console.log(userAgentInfo)
+//   console.log(userAgentInfo)
   var Agents = ["Android", "iPhone",
         "SymbianOS", "Windows Phone",
         "iPad", "iPod"];
