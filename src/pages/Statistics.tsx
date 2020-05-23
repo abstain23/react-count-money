@@ -1,149 +1,162 @@
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import Layout from 'components/Layout'
 import ReactEcharts from 'echarts-for-react';
-import day from 'dayjs'
-import { recordItemType, useRecords } from 'customHooks/useRecords';
+import { useRecords } from 'customHooks/useRecords';
+import {Select, Radio} from 'antd'
+import styled from 'styled-components';
+import {groupByWeek, groupByMonth, groupByYear} from 'lib/echartsMethods'
+import { RadioChangeEvent } from 'antd/lib/radio';
+
+const { Option } = Select;
 
 
+
+const Header = styled.header`
+font-size:20px;
+padding:4px 8px;
+display:flex;
+align-items:center;
+justify-content:center;
+`
+const RadioWrapper = styled.div`
+padding:4px 8px;
+.ant-radio-group {
+    display:flex;
+    .ant-radio-button-wrapper {
+        flex:1;
+        /* color:red; */
+    }
+}
+`
+
+const EchartWrapper = styled.div``
 const Echart:FC = () => {
+    const {records} = useRecords()
+    const [groupData, setGroupData] = useState<Map<string, number>>(groupByWeek(records, 0))
+    const [type, setType] = useState<0 | 1>(0)
+    const [group, setGroup] = useState<'week' | 'month' | 'year'>('week')
+    useEffect(() => {
+        if(records.length) {
+            if(group === 'week') {
+                setGroupData(groupByWeek(records, type))
+            } else if(group === 'month') {
+                setGroupData(groupByMonth(records, type))
+            } else if(group === 'year'){
+                setGroupData(groupByYear(records, type))
+            }
+        }
+    },[records, group, type])
+    const x = [...groupData.keys()];
+    const y = [...groupData.values()];
+    const av =  y.reduce((a,b) => a+b,0)/y.length
     const option = {
-        // title: {
-        //     text: '折线图堆叠'
-        // },
+        color:[type===0?'#40a9ff':'red'],
+        grid: {
+            top: '5%',
+            leef:'5%',
+            bottom: '10%',
+            // show:true,
+            // borderColor:'#40a9ff',
+            containLabel: true
+        },
         tooltip: {
             trigger: 'axis'
         },
-        legend: {
-            data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
+        // legend: {
+        //     data: ['收入','支出'],
+        //     textStyle: {
+        //         color:'red'
+        //     }
+        // },
         xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            data: x,
+            axisTick: {
+                interval: 0,
+                lineStyle: {
+                    opacity: 0
+                }
+            },
+            axisLabel: {
+                interval: 0,
+                fontSize: 8,
+                color: '#999999'
+            },
+            type: 'category'
         },
         yAxis: {
-            type: 'value'
+            axisLine: {
+                lineStyle: {
+                    opacity: 1
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    opacity: 0,
+                    color: '#ccc'
+                }
+            },
+            // axisLabel: undefined,
+            axisTick: undefined,
+            type:'value'
         },
-        series: [
-            {
-                name: '邮件营销',
-                type: 'line',
-                stack: '总量',
-                data: [120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name: '联盟广告',
-                type: 'line',
-                stack: '总量',
-                data: [220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name: '视频广告',
-                type: 'line',
-                stack: '总量',
-                data: [150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name: '直接访问',
-                type: 'line',
-                stack: '总量',
-                data: [320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name: '搜索引擎',
-                type: 'line',
-                stack: '总量',
-                data: [820, 932, 901, 934, 1290, 1330, 1320]
+        series: [{
+            type: 'line',
+            data: y,
+            smooth:true,
+        }, {
+            name: '平均值',
+            type: 'line',
+            data:[av],
+            // symbol: 'none',
+            lineStyle: {
+                type: 'dashed',
+                color: 'red',
+                width: 1,
+                opacity: 0.5
             }
-        ]
-    };
-    
+        }, {
+            name: '最大值',
+            type: 'line',
+            data: [500],
+            symbol: 'none',
+            lineStyle: {
+                color: 'red',
+                width: 1,
+                opacity: 0.5
+            }
+        }]
+    }
+    const handleChange = (value:0 | 1) => {
+        setType(value)
+    }
+    const onChange = (e:RadioChangeEvent) => {
+        const {value} = e.target
+        setGroup(value)
+    }
     return (
-        <div style={{width:375,height:300}}>
+        <div>
+            <Header>
+            <Select defaultValue={0} style={{ width: 120 }} onChange={handleChange}>
+                <Option value={0}>收入</Option>
+                <Option value={1}>支出</Option>
+            </Select>
+            </Header>
+            <RadioWrapper>
+            <Radio.Group onChange={onChange} defaultValue="week">
+                <Radio.Button value="week">周</Radio.Button>
+                <Radio.Button value="month">月</Radio.Button>
+                <Radio.Button value="year">年</Radio.Button>
+            </Radio.Group>
+            </RadioWrapper>
+            <EchartWrapper>
             <ReactEcharts option={option} />
+            </EchartWrapper>
         </div>
     )
 }
 
-const X = () => {
-    const {records} = useRecords()
-    const days = ():number => {
-        const [year,month] = [day().year(), day().month()]
-        const d = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if ((year % 4 === 0 && year % 100 !== 0) || (year % 100 === 0 && year % 400 === 0)) {
-            if (month === 1) {
-                return 29;
-            } else {
-                return d[month];
-            }
-        } else {
-            return d[month];
-        }
-    }
-    console.log(days())
-    const groupByweek = (records:recordItemType[]):Map<string, number> => {
-        const keys = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-        const res = new Map<string,number>()
-        let i:number;
-        for( i = 0; i<keys.length; i++) {
-            res.set(keys[i],0)
-        }
-        let r:recordItemType
-        for(r of records) {
-            const key = keys[day(r.creatAt).day()]
-            console.log(day(r.creatAt).day())
-            console.log(r.total)
-            // const initVal = res.get(key)
-            res.set(key, parseFloat(r.total)) 
-        }
-        return res
-    }
-    console.log(groupByweek(records))
-    const groupByMonth = (records:recordItemType[]):Map<string, number> => {
-        const keys:string[] = []
-        const res = new Map<string, number>()
-        let i:number;
-        for(i = 1; i<days();i++) {
-            keys.push(i.toString())
-        }
-        for(i=0;i<keys.length;i++) {
-            res.set(keys[i],0)
-        }
-        let r:recordItemType
-        for(r of records) {
-            const key = keys[day(r.creatAt).date()]
-            // const initVal = res.get(key)
-            res.set(key, parseFloat(r.total)) 
-        }
-        return res
-    }
-    console.log(groupByMonth(records))
-    const groupByYear = (records:recordItemType[]):Map<string, number> => {
-        const keys  = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
-        const res = new Map<string, number>()
-        let i:number;
-        for(i =0; i<keys.length;i++) {
-            res.set(keys[i],0)
-        }
-        let r:recordItemType
-        for(r of records) {
-            const key = keys[day(r.creatAt).month()]
-            res.set(key,parseFloat(r.total))
-        }
-        return res
-    }
-    console.log(groupByYear(records))
-}
-
 
 const Statistics:FC = () => {
-    X()
     return (
        <Layout>
            <Echart/>

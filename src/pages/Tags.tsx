@@ -21,7 +21,7 @@ padding:16px 8px;
     align-items:center;
     .label {
       font-size: 12px;
-      color: #a38932;
+      color: #40a9ff;
       margin-bottom: 4px;
     }
     .value {
