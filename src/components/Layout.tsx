@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav from 'components/Nav'
 import styled from 'styled-components'
 
@@ -32,8 +32,11 @@ const Layout:React.FC<Props> = (props) => {
     //     }
     //    }, 0)
     // },[props.scrollTop])
+    useEffect(() => {
+        document.getElementById('layout')!.style.height = document.body.clientHeight + 'px'
+    }, [])
     return (
-        <Wrapper>
+        <Wrapper id='layout'>
             <Main>
                 {props.children}
             </Main>

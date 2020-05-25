@@ -18,6 +18,11 @@ export default function App() {
     if(!isPC()) {
       message.warn({content:'建议使用手机或手机模拟器观看'})
     }
+    // window.addEventListener('resize', () => {
+    //   // alert('x')
+    //   alert(document.body.clientHeight)
+    //   document.body.style.height=document.body.clientHeight + 'px'
+    // })
   },[])
   return (
     <Router>

@@ -107,3 +107,16 @@ const [selected, setSelected] = useState({
 exact 精准匹配
 
 ```
+
+#### 安卓端input聚焦的时候，底部导航栏会上去， ios端input聚焦端时候，页面会放大
+
+```js
+解决办法
+在容器里面加上
+useEffect(() => {
+        document.getElementById('layout')!.style.height = document.body.clientHeight + 'px'
+    }, [])
+  解决安卓端问题
+  index.html 加上
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />  禁止缩放
+```
