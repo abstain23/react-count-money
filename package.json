@@ -1,6 +1,7 @@
 {
   "name": "react-wangcai",
   "version": "0.1.0",
+  "homepage": "https://rise_gitee.gitee.io/react-count-money",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.1.0",

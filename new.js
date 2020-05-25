@@ -18,3 +18,4 @@ function Fn(name, age) {
 
 var a = new Fn('cc', 18)
 console.log(a)
+

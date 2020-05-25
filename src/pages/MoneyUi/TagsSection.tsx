@@ -10,7 +10,7 @@ const { CheckableTag } = Tag
 
 const Wrapper = styled.section`
 background:#fff;
-padding:10px 4px;
+padding:4px 4px;
 flex-grow:1;
 flex-shrink:1;
 overflow:auto;

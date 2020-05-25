@@ -48,12 +48,12 @@ const Echart:FC = () => {
     },[records, group, type])
     const x = [...groupData.keys()];
     const y = [...groupData.values()];
-    const av =  y.reduce((a,b) => a+b,0)/y.length
+    // const av =  y.reduce((a,b) => a+b,0)/y.length
     const option = {
         color:[type===0?'#40a9ff':'red'],
         grid: {
             top: '5%',
-            leef:'5%',
+            left:'4%',
             bottom: '10%',
             // show:true,
             // borderColor:'#40a9ff',
@@ -78,7 +78,7 @@ const Echart:FC = () => {
             },
             axisLabel: {
                 interval: 0,
-                fontSize: 8,
+                fontSize: 6,
                 color: '#999999'
             },
             type: 'category'
@@ -97,33 +97,35 @@ const Echart:FC = () => {
             },
             // axisLabel: undefined,
             axisTick: undefined,
-            type:'value'
+            axisLabel: {
+                interval: 0,
+                fontSize: 8,
+                color: '#999999'
+            },
+            type:'value',
+            name: type === 0 ?'收入':'支出'
         },
         series: [{
             type: 'line',
+            name: type === 0 ?'收入':'支出',
             data: y,
             smooth:true,
-        }, {
-            name: '平均值',
-            type: 'line',
-            data:[av],
-            // symbol: 'none',
-            lineStyle: {
-                type: 'dashed',
-                color: 'red',
-                width: 1,
-                opacity: 0.5
-            }
-        }, {
-            name: '最大值',
-            type: 'line',
-            data: [500],
-            symbol: 'none',
-            lineStyle: {
-                color: 'red',
-                width: 1,
-                opacity: 0.5
-            }
+            lineStyle:{
+                opacity:0.5
+            },
+            markLine : {
+                symbol : 'none',
+                itemStyle : {
+                  normal : {
+                    color:'#1e90ff',
+                    label : {
+                      show:true,
+                      position:'middle'
+                    }
+                  }
+                },
+                data : [{type : 'average', name: '平均值'},{type : 'max', name: '最大值'}]
+              }
         }]
     }
     const handleChange = (value:0 | 1) => {
