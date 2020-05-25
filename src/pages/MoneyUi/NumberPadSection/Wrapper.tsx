@@ -17,11 +17,13 @@ flex-direction:column;
 .pad {
   /* display:flex; */
   /* flex-wrap:wrap; */
+
   button {
     width:25%;
     height:64px;
     float:left;
     border:none;
+    /* filter:hue-rotate(100deg); */
     /* &.ok {
       height:128px;
       float:right;

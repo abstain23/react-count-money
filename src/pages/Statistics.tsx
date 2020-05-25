@@ -17,11 +17,14 @@ padding:4px 8px;
 display:flex;
 align-items:center;
 justify-content:center;
+background:#40a9ff;
 `
 const RadioWrapper = styled.div`
 padding:4px 8px;
+background:#40a9ff;
 .ant-radio-group {
     display:flex;
+    border:none;
     .ant-radio-button-wrapper {
         flex:1;
         /* color:red; */
@@ -57,9 +60,9 @@ const Echart:FC = () => {
     const option = {
         color:[type===0?'#40a9ff':'red'],
         grid: {
-            top: '5%',
+            top: '10%',
             left:'4%',
-            bottom: '10%',
+            bottom: '8%',
             // show:true,
             // borderColor:'#40a9ff',
             containLabel: true
@@ -102,7 +105,7 @@ const Echart:FC = () => {
                 color: '#999999'
             },
             type:'value',
-            name: type === 0 ?'收入':'支出'
+            // name: type === 0 ?'收入':'支出'
         },
         series: [{
             type: 'line',
@@ -182,9 +185,9 @@ const Echart:FC = () => {
            <section>
            <RadioWrapper>
             <Radio.Group onChange={onChange} defaultValue="week">
-                <Radio.Button value="week">本周</Radio.Button>
-                <Radio.Button value="month">本月</Radio.Button>
-                <Radio.Button value="year">本年</Radio.Button>
+                <Radio.Button value="week">周</Radio.Button>
+                <Radio.Button value="month">月</Radio.Button>
+                <Radio.Button value="year">年</Radio.Button>
             </Radio.Group>
             </RadioWrapper>
             <EchartWrapper>

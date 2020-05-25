@@ -73,14 +73,14 @@ const Money:React.FC = () => {
                 <hr/>
                 {selected.amount} */}
             </div>
+            <CateGorySection value={selected.category as (0 | 1)}
+                             onChange={category => handleChange({category})}
+            />
             <TagsSection value={selected.tagsId}
                          onChange={tagsId => handleChange({tagsId})}
                          />
             <NotesSection value={selected.note}
                           onChange={note => handleChange({note})}
-            />
-            <CateGorySection value={selected.category as (0 | 1)}
-                             onChange={category => handleChange({category})}
             />
             <NumberPadSection value={selected.amount} 
                               onOk={(total:string) => handleSubmit(total)}

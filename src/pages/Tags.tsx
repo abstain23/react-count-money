@@ -9,7 +9,7 @@ import {useRecords, recordItemType} from 'customHooks/useRecords'
 import day from 'dayjs'
 
 const Header = styled.header`
-background:#fff;
+background:#40a9ff;
 padding:16px 8px;
 .total {
   display:flex;
@@ -21,11 +21,14 @@ padding:16px 8px;
     align-items:center;
     .label {
       font-size: 12px;
-      color: #40a9ff;
+      color: #fff;
       margin-bottom: 4px;
     }
     .value {
       font-size:12px;
+      span {
+        font-size:20px;
+      }
     }
   }
 }
@@ -139,11 +142,17 @@ const Tags:FC = () => {
            <div className='total'>
              <div>
                <span className='label'>总收入</span>
-               <span className='value'>{allIncome}</span>
+               <span className='value'>
+                 <span>{allIncome.toString().split('.')[0]}</span>
+                 {allIncome.toString().split('.')[1] ? '.'+allIncome.toString().split('.')[1] : '.00'}
+               </span>
              </div>
              <div>
                <span className='label'>总支出</span>
-              <span className='value'>{allOutlay}</span>
+              <span className='value'>
+                  <span>{allOutlay.toString().split('.')[0]}</span>
+                 {allOutlay.toString().split('.')[1] ? '.'+allIncome.toString().split('.')[1] : '.00'}
+              </span>
              </div>
            </div>
           </Header>
