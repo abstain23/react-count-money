@@ -2,6 +2,8 @@ import { recordItemType } from "customHooks/useRecords";
 import day from 'dayjs'
 
 const currentDay = day().format('YYYY-MM-DD')
+const currentMonth = day().format('YYYY-MM')
+const curretYear = day().format('YYYY')
 
 export const  groupByWeek = (records:recordItemType[],type: 0 | 1):Map<string, number> => {
   const keys = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
@@ -56,7 +58,7 @@ export const groupByMonth = (records:recordItemType[], type: 0 | 1):Map<string, 
   let r:recordItemType
   const newR = records.filter(r => r.category === type)
   for(r of newR) {
-      if(day(r.creatAt).format('YYYY-MM-DD') >= currentDay) {
+      if(day(r.creatAt).format('YYYY-MM') >= currentMonth) {
         const key = keys[day(r.creatAt).date()]
       // const initVal = res.get(key)
         const total = res.get(key) as number
@@ -76,7 +78,7 @@ export const groupByYear = (records:recordItemType[], type: 0 | 1):Map<string, n
   let r:recordItemType
   const newR = records.filter(r => r.category === type)
   for(r of newR) {
-    if(day(r.creatAt).format('YYYY-MM-DD') >= currentDay) {
+    if(day(r.creatAt).format('YYYY') >= curretYear) {
       const key = keys[day(r.creatAt).month()]
       const total = res.get(key) as number
       res.set(key, parseFloat(r.total) + total) 

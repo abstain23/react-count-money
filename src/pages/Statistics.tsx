@@ -30,6 +30,11 @@ padding:4px 8px;
 `
 
 const EchartWrapper = styled.div``
+
+const EchartPieWrapper = styled.div`
+border-top:1px solid #ccc;
+padding:4px 8px;
+`
 const Echart:FC = () => {
     const {records} = useRecords()
     const [groupData, setGroupData] = useState<Map<string, number>>(groupByWeek(records, 0))
@@ -62,12 +67,6 @@ const Echart:FC = () => {
         tooltip: {
             trigger: 'axis'
         },
-        // legend: {
-        //     data: ['收入','支出'],
-        //     textStyle: {
-        //         color:'red'
-        //     }
-        // },
         xAxis: {
             data: x,
             axisTick: {
@@ -117,10 +116,11 @@ const Echart:FC = () => {
                 symbol : 'none',
                 itemStyle : {
                   normal : {
-                    color:'#1e90ff',
+                    color:type===0?'#40a9ff':'red',
                     label : {
                       show:true,
-                      position:'middle'
+                      position:'middle',
+                      formatter: '{b}： {c}'
                     }
                   }
                 },
@@ -128,6 +128,41 @@ const Echart:FC = () => {
               }
         }]
     }
+    const option2 = {
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: ['40%', '60%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: true
+                },
+                data: [
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 234, name: '联盟广告'},
+                    {value: 135, name: '视频广告'},
+                    {value: 1548, name: '搜索引擎'}
+                ]
+            }
+        ]
+    };
     const handleChange = (value:0 | 1) => {
         setType(value)
     }
@@ -143,19 +178,30 @@ const Echart:FC = () => {
                 <Option value={1}>支出</Option>
             </Select>
             </Header>
-            <RadioWrapper>
+           <section>
+           <RadioWrapper>
             <Radio.Group onChange={onChange} defaultValue="week">
-                <Radio.Button value="week">周</Radio.Button>
-                <Radio.Button value="month">月</Radio.Button>
-                <Radio.Button value="year">年</Radio.Button>
+                <Radio.Button value="week">本周</Radio.Button>
+                <Radio.Button value="month">本月</Radio.Button>
+                <Radio.Button value="year">本年</Radio.Button>
             </Radio.Group>
             </RadioWrapper>
             <EchartWrapper>
-            <ReactEcharts option={option} />
+                <ReactEcharts option={option} />
             </EchartWrapper>
+           </section>
+            <section>
+                <EchartPieWrapper>
+                 <header>{type===0?'收入排行榜': '支出排行榜'}</header>
+                 <EchartWrapper>
+                    <ReactEcharts option={option2} />
+                </EchartWrapper>
+                </EchartPieWrapper>
+            </section>
         </div>
     )
 }
+
 
 
 const Statistics:FC = () => {
