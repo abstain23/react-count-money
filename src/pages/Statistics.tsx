@@ -119,12 +119,13 @@ const Echart:FC = () => {
                     color:type===0?'#40a9ff':'red',
                     label : {
                       show:true,
-                      position:'middle',
+                      position:'insideStartTop',
                       formatter: '{b}： {c}'
                     }
                   }
                 },
-                data : [{type : 'average', name: '平均值'},{type : 'max', name: '最大值'}]
+                data : [{type : 'average', name: '平均值'},{type : 'max', name: '最大值',label:{position:'insideEndTop'}}] 
+                // ,label:{distance:20}
               }
         }]
     }
