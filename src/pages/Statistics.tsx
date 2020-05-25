@@ -6,6 +6,7 @@ import {Select, Radio} from 'antd'
 import styled from 'styled-components';
 import {groupByWeek, groupByMonth, groupByYear} from 'lib/echartsMethods'
 import { RadioChangeEvent } from 'antd/lib/radio';
+import { useTags } from 'customHooks/useTags';
 
 const { Option } = Select;
 
@@ -32,15 +33,22 @@ background:#40a9ff;
 }
 `
 
-const EchartWrapper = styled.div``
-
+const WrapperLine = styled.div`
+`
 const EchartPieWrapper = styled.div`
 border-top:1px solid #ccc;
 padding:4px 8px;
+height:215px;
+.echarts-for-react {
+    width:100%;
+    height:100% !important;
+}
 `
+
 const Echart:FC = () => {
     const {records} = useRecords()
-    const [groupData, setGroupData] = useState<Map<string, number>>(groupByWeek(records, 0))
+    const {findTagsByIds} = useTags()
+    const [groupData, setGroupData] = useState<Map<string,{value:number,tagsId:number[]}>>(groupByWeek(records, 0))
     const [type, setType] = useState<0 | 1>(0)
     const [group, setGroup] = useState<'week' | 'month' | 'year'>('week')
     useEffect(() => {
@@ -55,8 +63,21 @@ const Echart:FC = () => {
         }
     },[records, group, type])
     const x = [...groupData.keys()];
-    const y = [...groupData.values()];
+    const y = [];
+    for(let {value} of groupData.values()) {
+        y.push(value)
+    }
+    const pieData:{value:number,name?:string | undefined}[] = []
+    const tt = [...groupData.values()]
+    // console.log(tt)
+    tt.forEach(item => pieData.push({value:item.value, name:findTagsByIds(item.tagsId).join('-')}))
+    // console.log()
     // const av =  y.reduce((a,b) => a+b,0)/y.length
+    // const pieData:{value:number,name:string}[] =[] 
+    // y.forEach(item => {
+    //     pieData.push({value:item})
+    // })
+    // console.log(pieData)
     const option = {
         color:[type===0?'#40a9ff':'red'],
         grid: {
@@ -137,33 +158,32 @@ const Echart:FC = () => {
             trigger: 'item',
             formatter: '{a} <br/>{b}: {c} ({d}%)'
         },
+        // legend:{
+        //     ori
+        // },
         series: [
             {
-                name: '访问来源',
+                name: type === 0 ?'收入来源': '支出用途',
                 type: 'pie',
-                radius: ['40%', '60%'],
+                center:['50%','50%'],
+                radius: ['0%', '70%'],
                 avoidLabelOverlap: false,
                 label: {
-                    show: false,
-                    position: 'center'
+                    show: true,
+                    // position: 'center'
+                    position:'outside'
                 },
-                emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
+                labelLine:{
+                    show:false
                 },
-                labelLine: {
-                    show: true
-                },
-                data: [
-                    {value: 335, name: '直接访问'},
-                    {value: 310, name: '邮件营销'},
-                    {value: 234, name: '联盟广告'},
-                    {value: 135, name: '视频广告'},
-                    {value: 1548, name: '搜索引擎'}
-                ]
+                // emphasis: {
+                //     label: {
+                //         show: true,
+                //         fontSize: '30',
+                //         fontWeight: 'bold'
+                //     }
+                // },
+                data: pieData
             }
         ]
     };
@@ -190,16 +210,14 @@ const Echart:FC = () => {
                 <Radio.Button value="year">年</Radio.Button>
             </Radio.Group>
             </RadioWrapper>
-            <EchartWrapper>
+            <WrapperLine>
                 <ReactEcharts option={option} />
-            </EchartWrapper>
+            </WrapperLine>
            </section>
             <section>
                 <EchartPieWrapper>
                  <header>{type===0?'收入排行榜': '支出排行榜'}</header>
-                 <EchartWrapper>
                     <ReactEcharts option={option2} />
-                </EchartWrapper>
                 </EchartPieWrapper>
             </section>
         </div>

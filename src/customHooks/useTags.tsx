@@ -44,6 +44,7 @@ export const useTags = () => {
     window.localStorage.setItem('tagsData', JSON.stringify(tagsData))
   }, tagsData)
   const findTagById = (id:number) => tagsData.find(item => item.id === id)
-  return {tagsData, setTagsData, findTagById}
+  const findTagsByIds = (ids:number[]) => ids.map(id => findTagById(id)?.name)
+  return {tagsData, setTagsData, findTagById, findTagsByIds}
 }
 
