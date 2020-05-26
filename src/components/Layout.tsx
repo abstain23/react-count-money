@@ -19,10 +19,10 @@ flex-direction:column;
 `
 
 type Props = {
-    scrollTop?:number
+    scrollTop?: number
 }
 
-const Layout:React.FC<Props> = (props) => {
+const Layout: React.FC<Props> = (props) => {
     // const mainRef = useRef<HTMLDivElement>(null)
     // useEffect(() =>{
     //    setTimeout(()=> {
@@ -33,7 +33,12 @@ const Layout:React.FC<Props> = (props) => {
     //    }, 0)
     // },[props.scrollTop])
     useEffect(() => {
-        document.getElementById('layout')!.style.height = document.body.clientHeight + 'px'
+        const fn = () => {
+            document.getElementById('layout')!.style.height = document.body.clientHeight + 'px'
+        }
+        fn()
+        window.addEventListener('resize', fn)
+        return () => window.removeEventListener('resize', fn)
     }, [])
     return (
         <Wrapper id='layout'>
