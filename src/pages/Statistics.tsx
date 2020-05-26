@@ -172,7 +172,7 @@ const Echart:FC = () => {
                 type: 'pie',
                 center:['50%','50%'],
                 radius: ['0%', '70%'],
-                avoidLabelOverlap: false,
+                avoidLabelOverlap: true,
                 label: {
                     show: true,
                     // position: 'center'

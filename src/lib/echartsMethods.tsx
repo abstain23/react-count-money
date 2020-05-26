@@ -2,7 +2,12 @@ import { recordItemType } from "customHooks/useRecords";
 import day from 'dayjs'
 // import { useTags } from "customHooks/useTags";
 
-const currentDay = day().format('YYYY-MM-DD')
+const currentDate = day().format('YYYY-MM-DD')
+const currentDay = day(currentDate).day()
+// console.log(day(currentDate).add( - currentDay, 'd').format('YYYY-MM-DD'))
+// console.log(currentDate)
+// console.log(currentDay)
+const currentWeek =day(currentDate).add( - currentDay, 'd').format('YYYY-MM-DD')
 const currentMonth = day().format('YYYY-MM')
 const currentYear = day().format('YYYY')
 
@@ -19,7 +24,7 @@ export const groupByWeek = (records: recordItemType[], type: 0 | 1): Map<string,
   let r: recordItemType
   const newR = records.filter(r => r.category === type)
   for (r of newR) {
-    if (day(r.creatAt).format('YYYY-MM-DD') >= currentDay) {
+    if (day(r.creatAt).format('YYYY-MM-DD') >= currentWeek) {
       const key = keys[day(r.creatAt).day()]
       // console.log(day(r.creatAt).day())
       // console.log(r.total)
@@ -98,7 +103,7 @@ export const pieDataByWeek = (records:recordItemType[], type: 0 | 1):pieDataType
   const newR = records.filter(r => r.category === type)
   let res:pieDataType[] = []
   for(let r of newR) {
-    if (day(r.creatAt).format('YYYY-MM-DD') >= currentDay) {
+    if (day(r.creatAt).format('YYYY-MM-DD') >= currentWeek) {
       res.push({value:parseFloat(r.total),name:JSON.stringify(r.tagsId)})
     }
   }
