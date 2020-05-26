@@ -4,7 +4,7 @@ import ReactEcharts from 'echarts-for-react';
 import { useRecords } from 'customHooks/useRecords';
 import {Select, Radio} from 'antd'
 import styled from 'styled-components';
-import {groupByWeek, groupByMonth, groupByYear} from 'lib/echartsMethods'
+import {groupByWeek, groupByMonth, groupByYear,pieDataType ,pieDataByWeek, pieDataByMonth, pieDataByYear} from 'lib/echartsMethods'
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { useTags } from 'customHooks/useTags';
 
@@ -49,16 +49,20 @@ const Echart:FC = () => {
     const {records} = useRecords()
     const {findTagsByIds} = useTags()
     const [groupData, setGroupData] = useState<Map<string,{value:number,tagsId:number[]}>>(groupByWeek(records, 0))
+    const [pieData, setPieData] = useState<pieDataType[]>([])
     const [type, setType] = useState<0 | 1>(0)
     const [group, setGroup] = useState<'week' | 'month' | 'year'>('week')
     useEffect(() => {
         if(records.length) {
             if(group === 'week') {
                 setGroupData(groupByWeek(records, type))
+                setPieData(pieDataByWeek(records,type))
             } else if(group === 'month') {
                 setGroupData(groupByMonth(records, type))
+                setPieData(pieDataByMonth(records,type))
             } else if(group === 'year'){
                 setGroupData(groupByYear(records, type))
+                setPieData(pieDataByYear(records,type))
             }
         }
     },[records, group, type])
@@ -67,10 +71,10 @@ const Echart:FC = () => {
     for(let {value} of groupData.values()) {
         y.push(value)
     }
-    const pieData:{value:number,name?:string | undefined}[] = []
-    const tt = [...groupData.values()]
+    // const pieData:{value:number,name?:string | undefined}[] = []
+    // const tt = [...groupData.values()]
     // console.log(tt)
-    tt.forEach(item => pieData.push({value:item.value, name:findTagsByIds(item.tagsId).join('-')}))
+    // tt.forEach(item => pieData.push({value:item.value, name:findTagsByIds(item.tagsId).join('-')}))
     // console.log()
     // const av =  y.reduce((a,b) => a+b,0)/y.length
     // const pieData:{value:number,name:string}[] =[] 
@@ -78,6 +82,7 @@ const Echart:FC = () => {
     //     pieData.push({value:item})
     // })
     // console.log(pieData)
+    // console.log(findTagsByIds(pieData))
     const option = {
         color:[type===0?'#40a9ff':'red'],
         grid: {
@@ -174,7 +179,7 @@ const Echart:FC = () => {
                     position:'outside'
                 },
                 labelLine:{
-                    show:false
+                    show:true
                 },
                 // emphasis: {
                 //     label: {
@@ -183,7 +188,13 @@ const Echart:FC = () => {
                 //         fontWeight: 'bold'
                 //     }
                 // },
-                data: pieData
+                data: pieData.map(item => {
+                    return {
+                        ...item,
+                        // eslint-disable-next-line
+                        name:findTagsByIds(JSON.parse(item.name)).join('-')
+                    }
+                })
             }
         ]
     };

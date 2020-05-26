@@ -4,8 +4,9 @@ import day from 'dayjs'
 
 const currentDay = day().format('YYYY-MM-DD')
 const currentMonth = day().format('YYYY-MM')
-const curretYear = day().format('YYYY')
+const currentYear = day().format('YYYY')
 
+export type pieDataType = {value:number, name:string}
 
 
 export const groupByWeek = (records: recordItemType[], type: 0 | 1): Map<string, { value: number, tagsId: number[] }> => {
@@ -82,11 +83,47 @@ export const groupByYear = (records: recordItemType[], type: 0 | 1): Map<string,
   let r: recordItemType
   const newR = records.filter(r => r.category === type)
   for (r of newR) {
-    if (day(r.creatAt).format('YYYY') >= curretYear) {
+    if (day(r.creatAt).format('YYYY') >= currentYear) {
       const key = keys[day(r.creatAt).month()]
       const total = res.get(key)?.value as number
       const tagsId = res.get(key)?.tagsId as number[]
       res.set(key, { value: parseFloat(r.total) + total, tagsId: [...tagsId, ...r.tagsId] })
+    }
+  }
+  return res
+}
+
+
+export const pieDataByWeek = (records:recordItemType[], type: 0 | 1):pieDataType[] => {
+  const newR = records.filter(r => r.category === type)
+  let res:pieDataType[] = []
+  for(let r of newR) {
+    if (day(r.creatAt).format('YYYY-MM-DD') >= currentDay) {
+      res.push({value:parseFloat(r.total),name:JSON.stringify(r.tagsId)})
+    }
+  }
+  return res
+}
+
+
+export const pieDataByMonth = (records:recordItemType[], type: 0 | 1):pieDataType[] => {
+  const newR = records.filter(r => r.category === type)
+  let res:pieDataType[] = []
+  for(let r of newR) {
+    if (day(r.creatAt).format('YYYY-MM') >= currentMonth) {
+      res.push({value:parseFloat(r.total),name:JSON.stringify(r.tagsId)})
+    }
+  }
+  return res
+}
+
+
+export const pieDataByYear = (records:recordItemType[], type: 0 | 1):pieDataType[] => {
+  const newR = records.filter(r => r.category === type)
+  let res:pieDataType[] = []
+  for(let r of newR) {
+    if (day(r.creatAt).format('YYYY') >= currentYear) {
+      res.push({value:parseFloat(r.total),name:JSON.stringify(r.tagsId)})
     }
   }
   return res

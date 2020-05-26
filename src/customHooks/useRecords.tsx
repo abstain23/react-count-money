@@ -23,7 +23,7 @@ export const useRecords = () => {
   // const history = useHistory()
   const [records, setRecords] = useState<recordItemType[]>([])
   useEffect(() => {
-    console.log('record did monut')
+    // console.log('record did monut')
     let localRecord:recordItemType[] = JSON.parse(window.localStorage.getItem('listRecord') || '[]')
     // console.log(localRecord)
     setRecords(localRecord)
@@ -34,7 +34,7 @@ export const useRecords = () => {
   //   }
   // },[records.length])
   useUpdate(() => {
-    console.log('record update')
+    // console.log('record update')
     window.localStorage.setItem('listRecord', JSON.stringify(records))
   },records)
 
