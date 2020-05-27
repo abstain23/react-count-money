@@ -34,7 +34,7 @@ const Layout: React.FC<Props> = (props) => {
     // },[props.scrollTop])
     useEffect(() => {
         const fn = () => {
-            document.getElementById('layout')!.style.height = document.body.clientHeight + 'px'
+            document.getElementById('layout')!.style.height = (document.body.clientHeight >= 568 ? document.body.clientHeight : 568 ) + 'px'
         }
         fn()
         window.addEventListener('resize', fn)
